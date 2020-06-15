@@ -64,41 +64,11 @@ unsigned long lastTriggerDown;            //(ms) time trigger pulled
 unsigned long setpointGovernor;           //Convert RPM to governor (8 * TIMING_MAX)
 unsigned long motorPolepairs = 7;         //Pole order of your flywheel motors
 
-//Profile/Selector stuff.
-int selector = 0;
-int selectorLast;                         //Save selector state. This should remain at the same as the above unless a change happened.
-boolean isBurst = false;                  //Global enable/disable Burst Length Limitation (Software Trigger Disconnector)
-int burst = 0;                            //Current burst length - Load this with a number of shots to fire before firing if isBurst is 1
-int burstCounter;                         //Counter
-
-//Off-Cycle busywork flip flop scheduler.
-boolean OffCycleState = true;             //Change state on every idle loop (NOT firing).
-                                          //Not all busywork tasks (such as ROF and selector updates) need be performed every cycle.
-                                          //Split the busywork tasks in 2 so we're not blocked too long when we're supposed be paying close attention to the trigger.
-
-//Selector config - Defaults here are full auto, 2 round burst, semi.
-int bursts[3] = {0, 2, 1};                  //Burst lengths - Every index that is true in the below must have a corresponding nonzero number in this.
-boolean isBursts[3] = {false, true, true};  //Disconnector mask.
-
-//BOLT DRIVE PARAMETERS - don't mess with these unless you know what you are doing
-unsigned long startSpeed = 400; //us (default 400 - leave alone)
-unsigned long shiftSpeed = 150; //us (default 150)
-unsigned long runSpeed;         //us (Fed from analog input logic)
-unsigned long runSpeedMax = 88; //Bolt speed absolute maximum - limit precisely
-double accelPhaseOne = 0.000000253494; //m value for ramp in low speed region
-double accelPhaseTwo = 0.000000180748; //m value for ramp in high speed region
-double decel =         0.000000439063; //m value for hard decel
-int boltShutdownTime = 1000; //ms - post-shot delay after which motor current is turned off
- 
 //fire control state variables section
 boolean prevTrigState = 0;
 boolean currTrigState = 0;
 unsigned long lastTriggerUp = 0;
-int stepsToGo;
 boolean firstRun = 1;
-boolean boltHomed = 0;
-double currSpeed = startSpeed; //to be used by fire() to be aware of motor speed from last run and mate speed ramp to that
-double stepdelay; //us
 
 //Selftest counters
 int selftestStepCounter = 0;
@@ -131,133 +101,36 @@ const int MODE1 = A4;
 const int PWM = 11;
 const int nSLP = 8;
 const int nFLT = 5;
+
+// Input pinout
+const int limitSwitchA = 4;
+const int limitSwitchB = 12;
+
+const int trigSwitchA = 6;
+const int trigSwitchB = 7;
+
+const int voltimeter = A1;
+
+bool readLimit() {
+  return digitalRead(limitSwitchA) && !digitalRead(limitSwitchB);
+}
+
+bool readTrigger() {
+  return !digitalRead(trigSwitchA) && digitalRead(trigSwitchB);
+}
   
-void commutate(double commDelay){
-    //Advance 1 microstep.
-    //Send rising edge
-    PORTC |= 0b00010000;
-    //delayMicroseconds() is actually very accurate. N.b.: delayMicroseconds() Does NOT use interrupts.
-    delayMicroseconds((unsigned long)(commDelay/2));
-    //Send falling edge
-    PORTC = PORTC & 0b11101111;
-    //Delay again. No particular reason for the symmetrical square wave.
-    delayMicroseconds((unsigned long)(commDelay/2));
-} 
- 
 bool decelerateBoltToSwitch(){
   //try to gracefully end drivetrain rotation
   //called after the last fire() has returned
   //return true for home and false for not home
-  //fire() runs the bolt forward 720 clicks (on 4:1 mode) leaving us 80 to bring it down to ~3rps where we know it can stop instantly and keep position.
-  //abort instantly on limit switch low
-  stepsToGo = 150;
-  stepdelay = currSpeed;
-  while((stepsToGo > 0) && (PIND & 0b00010000)){
-    commutate(stepdelay);
-    if(stepdelay<startSpeed) {stepdelay = stepdelay*(1+decel*stepdelay*stepdelay);}
-    stepsToGo--;
-  }  
-  currSpeed = startSpeed;
-  boltHomed = 1;
-  return !(PIND & 0b00010000);
+  return readLimit();
 }
 
 bool reverseBoltToSwitch(){
   //this is called if decelerateBoltToSwitch() returns false, and to realign on startup.
-  stepsToGo = 800; //up to a full rev permitted
   //set bolt direction reverse
-  digitalWrite(19, HIGH);
   //run bolt back at idle speed
-  while((PIND & 0b00010000)){
-    commutate(startSpeed);
-    stepsToGo--;
-    if(stepsToGo == 0){
-      //ran out of angle, die and reset direction
-      digitalWrite(19, LOW);
-      return false;
-    }
-  }
-  digitalWrite(19, LOW);
-  return !(PIND & 0b00010000);
-}
-
-void stepper_growl(void) {
-  //Stepper user feedback utility: low frequency growl. Makes a nice clattery noise from the linkage on older looser guns.
-  //Assumptions: Bolt current is ON.
-  //Limitations: Blocks. Don't use while waiting for trigger events. Make another trigger-aware noise generating function for that.
-
- selftestCycleCounter = 0;
-  while(selftestCycleCounter < 3){     // ~0.13 s
-    //do 4 microsteps one direction
-    selftestStepCounter = 0;
-    digitalWrite(19, LOW);
-    while(selftestStepCounter < 4){
-      commutate(5000);
-      selftestStepCounter++;
-    }
-    //and do 4 microsteps back the other way
-    selftestStepCounter = 0;
-    digitalWrite(19, HIGH);
-    while(selftestStepCounter < 4){
-      commutate(5000);
-      selftestStepCounter++;
-    }
-    selftestCycleCounter++;
-  }
-  digitalWrite(19, LOW);
-
-}
-
-void stepper_beep_low(void) {
-  //Stepper user feedback utility: _beep_ tone.
-  //Assumptions: Bolt current is ON.
-  //Limitations: Blocks. Don't use while waiting for trigger events. Make another trigger-aware noise generating function for that.
-
- selftestCycleCounter = 0;
-  while(selftestCycleCounter < 70){     // ~0.25 s
-    //do 4 microsteps one direction
-    selftestStepCounter = 0;
-    digitalWrite(19, LOW);
-    while(selftestStepCounter < 4){
-      commutate(210);
-      selftestStepCounter++;
-    }
-    //and do 4 microsteps back the other way
-    selftestStepCounter = 0;
-    digitalWrite(19, HIGH);
-    while(selftestStepCounter < 4){
-      commutate(210);
-      selftestStepCounter++;
-    }
-    selftestCycleCounter++;
-  }
-  digitalWrite(19, LOW);
-}
-
-void stepper_beep_high(void) {
-  //Stepper user feedback utility: ^beep^ tone.
-  //Assumptions: Bolt current is ON.
-  //Limitations: Blocks. Don't use while waiting for trigger events. Make another trigger-aware noise generating function for that.
-
- selftestCycleCounter = 0;
-  while(selftestCycleCounter < 140){     // ~0.25 s
-    //do 4 microsteps one direction
-    selftestStepCounter = 0;
-    digitalWrite(19, LOW);
-    while(selftestStepCounter < 4){
-      commutate(98);
-      selftestStepCounter++;
-    }
-    //and do 4 microsteps back the other way
-    selftestStepCounter = 0;
-    digitalWrite(19, HIGH);
-    while(selftestStepCounter < 4){
-      commutate(98);
-      selftestStepCounter++;
-    }
-    selftestCycleCounter++;
-  }
-  digitalWrite(19, LOW);
+  return readLimit();
 }
 
 void die(int major, int minor) {
@@ -303,18 +176,12 @@ void selftest(){
   //Power-on selftest routine (new 14-Feb-20).
   delay(500); //allow some time for drives to boot up and all voltages to stabilize and so forth (depending on when this is called)
   
-  //Is the bolt drive alive? Turn motor current on and growl
-  digitalWrite(8, LOW);
-  //Wait for 8825 to stabilize, likely not required.
-  delay(20);
-  //Growl once (Like old world t19s do) - It is hard to self-detect if the pusher inverter is working aside from moving it later on, and if it is not, we have no voice to warn anyone anyway!!
-  //So the single growl is the telltale.
-  stepper_growl();
-  delay(20);                        //Wait any vibration to subside (so motor doesn't bounce if unlocked immediately after growling)
-  //Turn current off.
-  digitalWrite(8, HIGH);
   //Rest of bolt checks after flywheel drive rotation check so we can do reverseBoltToSwitch with flywheels spinning at low speed to eject any darts or debris,
   //if the act of resetting the bolt dislodges or feeds anything accidentally. Sometimes it does.
+  // NOTE: For a rival continous feed system, I don't think we have a good way of testing the feed on poweron.
+  // However, for a more traditional scotch yoke dart system, it does make a lot of sense to check we are homed.
+  // And thus, the code to check for homing and eject debris should probably be readded!
+  // Possibly behind a flag. But for now, KISS and delete that code.
   
   //Trigger invalid state detection:
   //The complementary trigger input must have one line HIGH and one LOW at any given time unless the switch is moving.
@@ -418,23 +285,6 @@ void selftest(){
   drive1TachValid = false;
   //End flywheel drive checks.
   
-  //Attempt to establish bolt home position. We want to do this with flywheel drives enabled at a low speed so as to spit out any accidentally fed dart or trash that dislodges from cage
-  //when running the bolt home. Since the drives haven't had a speed set, they are at default ~5000rpm (for 14 pole) and anything mistakenly launched will go about 36fps.
-  //Turn bolt motor current on
-  digitalWrite(8, LOW);
-  //Wait for 8825 to stabilize, likely not required.
-  delay(20);
-  //Enable flywheel drives (Avoid latency between this and reverseBoltToSwitch return if already home to avoid the drives having time to turn current on for a moment if unnecessary)
-  OCR1A = 500;                      //Max torque
-  OCR1B = 500;                      //Nb: 5000rpm governor by default
-  if(!reverseBoltToSwitch()) {      //Attempt to find home with up to 1 full revolution (Returns true immediately without motion if already home)
-    die(1, 1);                      //Major 1 minor 1: Bolt drive fault, homing failed
-  }
-  OCR1A = 230;                      //Disable
-  OCR1B = 230;
-  //Turn bolt motor current off.
-  digitalWrite(8, HIGH);
-  //End bolt checks.
   //End POST.
 }
 
@@ -505,37 +355,6 @@ void speedtrap(void) {
 
 void fire(){
   //loop called to fire a shot
-  //set distance to run bolt forward
-  stepsToGo = 720;
-  //if continuing a previous instance add 80 steps
-  if(!boltHomed) {stepsToGo += 80;}
-  //get start point for first ramp
-  if(currSpeed < startSpeed){
-    //bolt already running
-    stepdelay = currSpeed;
-  } else {
-    //bolt not running
-    stepdelay = startSpeed;
-  }
-  // do first ramp if speed below shiftpoint
-  while(stepdelay > shiftSpeed){
-      commutate(stepdelay); 
-      stepdelay = stepdelay*(1-accelPhaseOne*stepdelay*stepdelay);
-      stepsToGo--;
-  }
-  //do second speed ramp if speed above shift but below running speed
-  while(stepdelay > runSpeed){
-    commutate(stepdelay);
-    stepdelay = stepdelay*(1-accelPhaseTwo*stepdelay*stepdelay);
-    stepsToGo--;
-  }
-  //do constant speed run until out of steps
-  while(stepsToGo > 0){
-    commutate(stepdelay);
-    stepsToGo--;
-  }
-  currSpeed = stepdelay;
-  boltHomed = 0;
 }
 
 //Interrupt mute/unmute functions for convenience.
@@ -726,14 +545,12 @@ void loop(){
         lastTriggerUp = millis();
       } else {
         //Successful acceleration: start firing.
-        //First load the burst length to fire:
-        if(isBurst) {burstCounter = burst;}
         //Already know speed is good at this point, mute tach ISRs
         disableTachInterrupts();
         fire();
         //first sealed-in shot is over. Check trigger *quickly* for downness (Nb: We may be commutating the pusher right now) and fire again if down and called for. Trigger is PD0, PD1.
         //This second fire() call may execute 0 times if isBurst is true and burstCounter starts as 1.
-        while((!isBurst || --burstCounter > 0) && (PIND & 0b00000001) && !(PIND & 0b00000010)){
+        while((PIND & 0b00000001) && !(PIND & 0b00000010)) {
           fire();
         }
         //Here, firing is definitely OVER. Get the bolt back safely to home position (N.b.: Flywheel Drives are still enabled right now, so any spurious feed from this is safe)
@@ -745,8 +562,7 @@ void loop(){
         OCR1B = 230;
         lastTriggerUp = millis(); //Not ACTUALLY trigger up any more due to the disconnector trap. A burst disconnect is a pseudo trigger up.
         //Main disconnector trap - This is where we land if firing ends and trigger is still down.
-        //Note that if full auto, leaving this active would result in trigger events during the decel window trapping here, I don't know how I got along with that so long without catching it.
-        if(isBurst) {while(digitalRead(0) && !digitalRead(1)) {delay(1);}}
+	// Without burst firing, this shouldn't happen.
       }
     }
   } else {
@@ -756,10 +572,10 @@ void loop(){
     goodTachCount = 0;
     drive0TachValid = false;
     drive1TachValid = false;
-    if((millis() - lastTriggerUp)>boltShutdownTime){
+    //if((millis() - lastTriggerUp)>boltShutdownTime){
       //turn bolt motor current off
       // TODO bregg: Do I want to do anything here?
-    }
+    //}
   }
 }
 
