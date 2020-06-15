@@ -1,84 +1,22 @@
- ////S-Core Blaster Controller Firmware
- ////Version 0.96 [developmental]
- ////by torukmakto4
- ////DZ Industries
- ////This is part of Project T19
- ////Forever Open - Forever Independent
-
- ////Project T19 and this Software (DZ Core) are released under the Creative Commons BY-SA 4.0 license.
- ////https://creativecommons.org/licenses/by-sa/4.0/
- 
- ////This targets:
- ////S-Core Single-Board Blaster Manager 1.0/1.5 and S-Core Mini 1.0
- 
- ////Flash this as (in Arduino IDE): Arduino Pro Mini 5V/16MHz.
- ////Use "Upload using programmer" (Shift-Upload) using a ISP tool and the 6-pin header on the S-Core board. Serial Bootloader flashing is NOT supported on S-Core.
- 
- ////General blaster assumptions:
- ////200s/rev (100 pole) 2 phase hybrid stepper
- ////direct drive scotch yoke bolt, 1 shot per rev 
- ////SPST bolt limit switch
- ////SPDT trigger switch. Common to ground. Inputs are 1k pullup.
- ////Selector should be 3 position center off SPDT. Common to ground, position 1 and 2 to input lines (1k pullup)
- ////User Analog Input: Connect to wiper of a potentiometer, end terminals 5V and ground.
- ////SpeedLock input: This is a pot directly on the board.
- 
- ////ATmega328P @ 16MHz with external ceramic resonator
- 
- ////PINOUTS - S-Core 1.0/1.5
- //AVR pin - Arduino IDE pin - functionality
- //PC0 - D14 - Solenoid driver. Output. Active high. Pulldown (S-Core 1.0) - It is a GPIO pin on the 1.5.
- //PC1 - D15 or A1 (ADC capable) - Exposed on the GPIO connector for expansion or arbitrary use.
- //PC2 - D16 - Selector input 2. Pullup.
- //PC3 - D17 - Selector input 1. Pullup.
- //PC4 - D18 - DRV8825 Step signal. Output. Rising edge triggered.
- //PC5 - D19 - DRV8825 Direction signal. Output.
- //PD0 - D0 - Trigger input 1. Pullup.
- //PD1 - D1 - Trigger input 2. Pullup.
- //PD2 - D2 - INT0 - Tach input channel 0 (M1F). (Warning: These should NOT be allowed to float with the interrupt turned on if unused!!!!!!)
- //PD3 - D3 - INT1 - Tach input channel 1 (M2F).
- //PD4 - D4 - Bolt limit switch input. Pullup.
- //PD5 - D5 - DRV8825 M2. Output
- //PD6 - D6 - DRV8825 M1. Output
- //PD7 - D7 - DRV8825 M0. Output
- //PB2 - D10 - OCR1B - Throttle channel 0 (M1, M1F) associated with INT0 (PD2)
- //PB1 - D9 - OCR1A - Throttle channel 1 (M2, M2F) associated with INT1 (PD3)
- //PB0 - DRV8825 Enable. Output. Active low.
- //ADC6 - User analog input (KNOB)
- //ADC7 - Onboard analog input pot (SPL)
- 
- //ICSP header:
- //PB3 - MOSI
- //PB4 - MISO
- //PB5 - SCK
- //PC6 - RESET (pullup)
- 
- //PB6/PB7 - XTAL1/2 (Abracon Ceramic Resonator is present)
- 
- //VCC = AVCC = AREF = 5V
-
- ////changelog of the NEW new era:
- ////08-19-19 - Rework for S-Core board, add dual-channel throttle and tach-based STC. Remove delay-based STC.
- ////08-31-19 - Implement digital governor updates, selective profile, analog speed inputs, ...
- ////12-30-19 - WIP Remove Alternate Mode. Analog knob is bolt speed control in run mode. Trigger down at boot to set speed.
- ////           Default to SPL setting. Throttle PWM interrupt to overlay governor updates instead of bitbang.
- ////           Add restart compensation to improve followup shot snappiness.
- ////           And then promptly comment out restart compensation. 
- ////02-09-20 - Fix all the wrong stuff with governor update interrupt management
- ////           Add ROF linearization, provision for configuring ROF in RPM, etc.
- ////           Start improving selftest
- ////02-14-20 - New hardware selftest, velocity watchdog, and fault codes
- ////02-29-20 - Rework selftest a bit to help bolt reset procedure spit out jam debris automatically with the flywheels and not create any new stoppage by feeding unknowingly while homing
- ////           Make Orthomatic feed control stricter and use a more appropriate polling period for checking tachs.
- ////04-07-20 - Fix erroneous trigger disconnection while full auto and decelerateBoltToSwitch(), etc.
- 
- ////This uses the per-cycle lightweight calculation of stepper commutation period described in
- ////http://hwml.com/LeibRamp.pdf
- 
- ////This is free and open source software.
- ////Eywa has been made aware of this fact.
- ////You will not get far, should you try to commercialize it.
- 
+ //// PINOUTS - S-Core 1.0/1.5
+ // AVR pin - Arduino IDE pin - functionality
+ // Pusher Driver Chip (8801)
+ // PC5 - A5 - 8801 DIR
+ // PC4 - A4 - 8801 MODE1
+ // PB3 - 11 - 8801 PWM
+ // PB0 - 8 - 8801 nSLP
+ // PD5 - 5 - 8801 nFLT
+ // Input
+ // PC1 - A1 - VOLTIMETER
+ // PD6 - D6 - Trigger input 1. Pullup.
+ // PD7 - D7 - Trigger input 2. Pullup.
+ // PD2 - D2 - INT0 - Tach input channel 0 (M1F). (Warning: These should NOT be allowed to float with the interrupt turned on if unused!!!!!!)
+ // PD3 - D3 - INT1 - Tach input channel 1 (M2F).
+ // PD4 - D4 - Bolt limit switch input. Pullup.
+ // PB4 - D12 - Bolt limit switch input. Pullup.
+ // Flywheel Drive
+ // PB2 - D10 - OCR1B - Throttle channel 0 (M1, M1F) associated with INT0 (PD2)
+ // PB1 - D9 - OCR1A - Throttle channel 1 (M2, M2F) associated with INT1 (PD3)
  
 ////PWM Timer1 interrupt governor control variables
 volatile int gov_currentBit;               //Loop counter/index (shall not be unsigned)
@@ -112,9 +50,12 @@ volatile boolean drive1TachValid = false;
 ////Orthomatic - Tach based STC variables.
 volatile unsigned long speedSetpoint;     //us (6 * TIMING_MAX / 4)
 int goodTachsToFire = 5;                  //how many consecutive good readings to consider motors to be stable and start bolt motion?
-unsigned long speedOffsetMargin;          //Consider tach in range if speedOffsetMargin us greater than (lower speed) speedSetpoint
+unsigned long minRPM = 5000;              //Fly speed command min (Set this appropriately for your system to ensure passing darts at minimum speed)
+unsigned long maxRPM = 44000;             //Fly speed command max (Set this appropriately. If the drive can't actually reach this speed you won't be able to fire!)
+unsigned long speedOffsetMargin;          //Consider tach in range if speedOffsetMargin is greater than (lower speed) speedSetpoint
 unsigned long speedOffsetMarginMin = 45;  //At low speed   (This compensates competing effects from period being 1/f, control loop performance, and tach resolution so isn't much more
-unsigned long speedOffsetMarginMax = 22;  //At max speed    than a fudge factor)
+unsigned long speedOffsetMarginMax = 13;  //At max speed    than a fudge factor) ;; TODO: Do I need to update this?!
+// With the 25510 governer, we started firing at ~24K.  I set us to fire at about 38.2K when running at 40K RPM.  Hopefully that'll be be enough?
 int goodTachCount = 0;                    //counter for loops with good speed reading
 unsigned long startBlankTime  = 1;        //actually delay step for tach checks
 unsigned long failTime = 1000;            //Abort if drives don't either send tach pulses or reach set speed in a reasonable time.
@@ -128,10 +69,6 @@ unsigned long splValue;                   //10 bit ADC for SPL pot on board - To
 unsigned long minROF = 300;               //In rounds per minute (or pusher motor RPM)
 unsigned long maxROF = 860;               //In rounds per minute (or pusher motor RPM) (Note this should be, at most, close but slightly higher to what runSpeedMax below enforces)
 unsigned long setpointROF;                //To store set ROF input
-unsigned long minRPM = 5000;              //Fly speed command min (Set this appropriately for your system to ensure passing darts at minimum speed)
-unsigned long maxRPM = 25510;             //Fly speed command max (Set this appropriately. If the drive can't actually reach this speed you won't be able to fire!)
-unsigned long limitRPM;                   //Speed limit (Tournament lock) - this potentiometer should be inaccessible without tools
-unsigned long setpointRPM;                //Set RPM
 unsigned long setpointGovernor;           //Convert RPM to governor (8 * TIMING_MAX)
 unsigned long motorPolepairs = 7;         //Pole order of your flywheel motors
 
@@ -656,35 +593,10 @@ boolean setGovernorBoth(void) {
   }                                               
  delay(10);                                       //Ensure some clean throttle pulses get fired between governor packets so drive doesn't disarm/balk
  disableGovernorInterrupt();                      //Mute ISR
-  return true;
+ return true;
 }
-
-void getLimitRPM(void) {
-  //Get SPL setting and set limitRPM
-  splValueRaw = analogRead(A7) + 10;              //There might be some stray voltage drop at full pot deflection
-  splValue = constrain(splValueRaw, 0, 1023);
-  limitRPM = map(splValue, 0, 1023, minRPM, maxRPM);
-}
-
-void updateSpeed(void) {
-  //Set setpointRPM from limitRPM and knob, update governor, push governor update, and update tach control parameters.
-  getLimitRPM();                                                   //Read tournament lock and update limitRPM
-  knobValueRaw = analogRead(A6) + 10;                              //There might be some stray voltage drop at full pot deflection.
-  knobValue = constrain(knobValueRaw, 0, 1023);          
-  setpointRPM = map(knobValue, 0, 1023, minRPM, limitRPM);         //Map to something between minRPM and limitRPM
-  setpointGovernor = (320000000/(setpointRPM * motorPolepairs));   //Convert to governor, which is 8 * TIMING_MAX (i.e. TIMING_MAX * CPU_MHZ (=16) / 2) at full resolution
-  speedSetpoint = ((3 * setpointGovernor)/16);                     //Convert to tach: 6 * TIMING_MAX / 4
-  //Update margin for Orthomatic control. For now trying linear with RPM request like this
-  speedOffsetMargin = map(setpointRPM, minRPM, maxRPM, speedOffsetMarginMin, speedOffsetMarginMax);
-  //Push governor update
-  governor = setpointGovernor;
-  setGovernorBoth();                                               //Eventually this ought to check the return value
-}
-
-void updateSpeedFixed(void) {
+void updateSpeedFixed(unsigned long setpointRPM) {
   //Set setpointRPM from limitRPM only, update governor, push governor update, and update tach control parameters.
-  getLimitRPM();                                                   //Read tournament lock and update limitRPM
-  setpointRPM = limitRPM;                                          //Max velocity per tournament lock 
   setpointGovernor = (320000000/(setpointRPM * motorPolepairs));   //Convert to governor, which is 8 * TIMING_MAX (i.e. TIMING_MAX * CPU_MHZ (=16) / 2) at full resolution
   speedSetpoint = ((3 * setpointGovernor)/16);                     //Convert to tach: 6 * TIMING_MAX / 4
   //Update margin for Orthomatic control. For now trying linear with RPM request like this
@@ -793,30 +705,14 @@ void loop(){
     selftest();
     //Wait a moment and...
     delay(500);
-    //catch trigger down at boot - Enter user speed configuration mode
-    if(digitalRead(0) && !digitalRead(1)) {
-      //enable both flywheel drives
-      OCR1B = 500;
-      OCR1A = 500;
-      delay(100); //ensure throttle validity during motor start "stop-quickly" logic in SimonK
-      //trap trigger down state in this loop:
-      while(digitalRead(0) && !digitalRead(1)) {
-        //leave flywheel drives spinning, and continuously do governor updates from the analog knob
-        updateSpeed(); //Nb: updateGovernorBoth blocks while a packet is being transmitted, thus so does this call.
-      }
-      //trigger release exits trap (leaving last speed configuration in place) to HERE.
-      //Speed is now set on the motor drives AND the tach control variables to match
-      //Nb: Motors are stll enabled. That's OK as speedtrap() will shut them down.
-    } else {
-      //default speed is tournament lock setting
-      delay(100); //Some anti-noise buffer
-      while(gov_update_repeats) {
-        updateSpeedFixed(); //Nb: updateGovernorBoth blocks while a packet is being transmitted, thus so does this call.
-        delay(20); //Some anti-noise buffer
-        gov_update_repeats--;
-      }
-      delay(100); //Same here
+    // Set the speed
+    delay(100); //Some anti-noise buffer
+    while(gov_update_repeats) {
+      updateSpeedFixed(37000); //Nb: updateGovernorBoth blocks while a packet is being transmitted, thus so does this call.
+      delay(20); //Some anti-noise buffer
+      gov_update_repeats--;
     }
+    delay(100); //Same here
     ////Speed setpoint and associated parameters fed to STC stuff is now set in concrete for the remainder of this uptime.
     //Verify set speed. Nb: Since this happens seamlessly after user-adjusting speed (the motors were still running) there is no "blip"
     speedtrap();                 //Bust any wrong flywheel speeds now before firing is allowed. Starts motors if they weren't already and shuts them down afterward.

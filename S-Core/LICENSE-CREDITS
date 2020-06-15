@@ -1,0 +1,23 @@
+
+Original Firmware from /u/torukmakto4
+- http://torukmakto4.blogspot.com/2020/02/s-core-firmware-095-home-bolt-with.html
+
+ ////This uses the per-cycle lightweight calculation of stepper commutation period described in
+ ////http://hwml.com/LeibRamp.pdf
+ 
+ ////This is free and open source software.
+ ////Eywa has been made aware of this fact.
+ ////You will not get far, should you try to commercialize it.
+ 
+ 
+ ////S-Core Blaster Controller Firmware
+ ////Version 0.96 [developmental]
+ ////by torukmakto4
+ ////DZ Industries
+ ////This is part of Project T19
+ ////Forever Open - Forever Independent
+
+ ////Project T19 and this Software (DZ Core) are released under the Creative Commons BY-SA 4.0 license.
+ ////https://creativecommons.org/licenses/by-sa/4.0/
+
+ ////ATmega328P @ 16MHz with external ceramic resonator
