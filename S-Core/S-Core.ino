@@ -501,7 +501,7 @@ void loop(){
     // Set the speed
     delay(100); //Some anti-noise buffer
     while(gov_update_repeats) {
-      updateSpeedFixed(37000); //Nb: updateGovernorBoth blocks while a packet is being transmitted, thus so does this call.
+      updateSpeedFixed(30000); //Nb: updateGovernorBoth blocks while a packet is being transmitted, thus so does this call.
       delay(20); //Some anti-noise buffer
       gov_update_repeats--;
     }
@@ -520,6 +520,7 @@ void loop(){
   if(currTrigState && prevTrigState){
     //enable tachs
     enableTachInterrupts();
+    unsigned long started_revving = millis();
     //start flywheels
     OCR1A = 500; //go
     OCR1B = 500; //go
@@ -569,11 +570,15 @@ void loop(){
         //Successful acceleration: start firing.
         //Already know speed is good at this point, mute tach ISRs
         disableTachInterrupts();
+	unsigned long rev_time = millis() - started_revving;
+	if ( rev_time > 200 ) {
+	  digitalWrite(LED_BUILTIN,HIGH);
+	}
 	// TODO:Bregg Clean up firing code, at least add pusher stall protection.
 	set_pusher(true);
 	// IF not loaded load a ball
 	// Timeout on all operations in case of empty mag/jams.
-	unsigned long timeout = 300;
+	unsigned long timeout = 600;
 	unsigned long timout_counter = millis();
 	bool timed_out = false;
 	while (!readLimit() && !timed_out) {
@@ -595,16 +600,17 @@ void loop(){
 	  bool new_limit_switch_value = readLimit();
 	  if ( limit_switch_value != new_limit_switch_value ) {
 	    // Reset timeout.
-	    timout_counter = millis();
+	    timout_counter = millis()-5;
 	  }
 	  limit_switch_value = new_limit_switch_value;
 	  timed_out = ((millis()-timout_counter) > timeout);
 	}
 	timout_counter = millis();
 	// Load a new ball, if not already loaded.
-	while (!readLimit() && !timeout) {
+	while (!readLimit() && !timed_out) {
 	  timed_out = ((millis()-timout_counter) > timeout);
 	}
+
 	// Done firing.
 	set_pusher(false);
 	// TODO: Bregg Clean up firing code
