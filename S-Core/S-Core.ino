@@ -182,6 +182,7 @@ void selftest(){
   // However, for a more traditional scotch yoke dart system, it does make a lot of sense to check we are homed.
   // And thus, the code to check for homing and eject debris should probably be readded!
   // Possibly behind a flag. But for now, KISS and delete that code.
+  // TODO: Perhaps in the future if I add something to block reversing the pusher causing balls to go where they shouldn't add some kind of reverse and check here?
   
   //Trigger invalid state detection:
   //The complementary trigger input must have one line HIGH and one LOW at any given time unless the switch is moving.

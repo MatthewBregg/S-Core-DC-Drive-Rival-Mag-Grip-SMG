@@ -1,10 +1,3 @@
-
-Original Firmware from /u/torukmakto4
-- http://torukmakto4.blogspot.com/2020/02/s-core-firmware-095-home-bolt-with.html
-
- ////This uses the per-cycle lightweight calculation of stepper commutation period described in
- ////http://hwml.com/LeibRamp.pdf
- 
  ////This is free and open source software.
  ////Eywa has been made aware of this fact.
  ////You will not get far, should you try to commercialize it.
