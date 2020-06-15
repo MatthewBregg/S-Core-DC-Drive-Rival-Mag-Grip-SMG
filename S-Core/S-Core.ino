@@ -124,6 +124,13 @@ unsigned long speedtrap_buf0;                     //Add every successive read to
 unsigned long speedtrap_buf1;                     //Ditto for drive 1 (Done simultaneously)
 unsigned long speedtrap_offsetMargin      = 20;   //Increment goodTachCount in speedtrap when both buffers within this distance of the setpoint
 unsigned long speedtrap_overspeedTripMargin = 50; //Unfiltered "critical overspeed" detector uses this. Fails on any single pulse shorter than this after a delay to account for any initial desyncs
+
+// DRV8801 Pinout
+const int DIR = A5;
+const int MODE1 = A4;
+const int PWM = 11;
+const int nSLP = 8;
+const int nFLT = 5;
   
 void commutate(double commDelay){
     //Advance 1 microstep.
@@ -253,38 +260,6 @@ void stepper_beep_high(void) {
   digitalWrite(19, LOW);
 }
 
-void stepper_alarm(void) {
-  //Stepper user feedback utility: Alarm melody.
-  //Assumptions: Bolt current is ON.
-  //Limitations: Blocks. Subordinate calls in this block. Don't use while waiting for trigger events. Make another trigger-aware noise generating function for that.
-
-  selftestAlarmCounter = 0;
-  while(selftestAlarmCounter < 3) {      //repeat alarm 3 times
-    stepper_beep_high();
-    stepper_beep_low();
-    stepper_beep_low();
-    stepper_beep_low();                  // "Sad Raymond"
-    selftestAlarmCounter++;
-  }
-}
-
-void stepper_code_blipper(int code_major, int code_minor) {
-  //Stepper user feedback utility: Blip out error code (or other value) with growls.
-  //Assumptions: Bolt current is ON.
-  //Limitations: Blocks. Subordinate calls in this block. Don't use while waiting for trigger events. Make another trigger-aware noise generating function for that.
-  while(code_major > 0) {      //Growl code_major times
-    stepper_growl();
-    delay(200);                //With 0.2s between growls
-    code_major--;
-  }
-  delay(700);                  //0.7s silence between major and minor
-  while(code_minor > 0) {      //Growl code_minor times
-    stepper_growl();
-    delay(200);                //With 0.2s between growls
-    code_minor--;
-  }
-}
-
 void die(int major, int minor) {
   //Terminal error handler: Invoked when further operation is unsafe or impossible. Play alarm, then blip out error code. Loop forever, blocking everything else.
   //Zero flywheel drive throttle to ensure anything that happened during the fault gets shut off
@@ -293,15 +268,34 @@ void die(int major, int minor) {
   //Mute certain ISRs that might have been left on by code where fault occurred
   disableGovernorInterrupt();
   disableTachInterrupts();
-  //Turn bolt motor current on, if it wasn't already
-  digitalWrite(8, LOW);
-  //Wait for 8825 to stabilize, if necessary
-  delay(20);
-  while(1) {
-    stepper_alarm();
-    delay(700);
-    stepper_code_blipper(major, minor);
-    delay(700);
+  // Turn off the bolt motor, in case we were trying to push still and stalled!
+  digitalWrite(PWM, LOW);
+  // TODO: BREGG: Considering adding a piezo and using that to bleep out the error codes instead?
+  while(true) {
+    // Large off indicates resetting up error code.
+    digitalWrite(LED_BUILTIN,LOW);
+    delay(3000);
+    // Blip out major.
+    for (int i = 0; i < major; ++i) {
+      digitalWrite(LED_BUILTIN,HIGH);
+      delay(700);
+      digitalWrite(LED_BUILTIN,LOW);
+      delay(700);
+    }
+    // 3 quick flashes indicates minor is to follow!
+    for (int i = 0; i != 3; ++i) {
+      digitalWrite(LED_BUILTIN,HIGH);
+      delay(50);
+      digitalWrite(LED_BUILTIN,LOW);
+      delay(50);
+    }
+    // Blip out minor!
+    for (int i = 0; i < minor; ++i) {
+      digitalWrite(LED_BUILTIN,HIGH);
+      delay(700);
+      digitalWrite(LED_BUILTIN,LOW);
+      delay(700);
+    }
   } //Loop for eternity, there's nothing more to be done
 }
 
