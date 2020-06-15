@@ -199,6 +199,7 @@ void die(int major, int minor) {
       digitalWrite(LED_BUILTIN,LOW);
       delay(50);
     }
+    delay(500);
     // Blip out minor!
     for (int i = 0; i < minor; ++i) {
       digitalWrite(LED_BUILTIN,HIGH);
@@ -571,28 +572,41 @@ void loop(){
 	// TODO:Bregg Clean up firing code, at least add pusher stall protection.
 	set_pusher(true);
 	// IF not loaded load a ball
-	while (!readLimit()) {};
+	// Timeout on all operations in case of empty mag/jams.
+	unsigned long timeout = 300;
+	unsigned long timout_counter = millis();
+	bool timed_out = false;
+	while (!readLimit() && !timed_out) {
+	  timed_out = ((millis()-timout_counter) > timeout);
+	}
+	// Reset timeout.
+	timout_counter = millis();
 	delay(5);
 	// Fire the loaded ball
-	while (readLimit()) {};
+	while (!timed_out && readLimit()) {
+	  timed_out = ((millis()-timout_counter) > timeout);
+	}
+	// Reset timeout.
+	timout_counter = millis();
 	delay(5);
 	// While the trigger remains down, keep firing.
-	while(readTrigger()) {}
+	bool limit_switch_value = readLimit();
+	while(readTrigger() && !timed_out) {
+	  bool new_limit_switch_value = readLimit();
+	  if ( limit_switch_value != new_limit_switch_value ) {
+	    // Reset timeout.
+	    timout_counter = millis();
+	  }
+	  limit_switch_value = new_limit_switch_value;
+	  timed_out = ((millis()-timout_counter) > timeout);
+	}
+	timout_counter = millis();
 	// Load a new ball, if not already loaded.
-	// Timeout on loading the new ball incase of empty mag/jam.
-	unsigned long stopped_firing_at = millis();
-	while (!readLimit() && ((millis()-stopped_firing_at) < 300)) {};
+	while (!readLimit() && !timeout) {
+	  timed_out = ((millis()-timout_counter) > timeout);
+	}
 	// Done firing.
 	set_pusher(false);
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// fire();																				    //
-        // //first sealed-in shot is over. Check trigger *quickly* for downness and fire again if down and called for.								    //
-        // while(readTrigger()) {																		    //
-        //   fire();																				    //
-        // }																					    //
-        // //Here, firing is definitely OVER. Get the bolt back safely to home position (N.b.: Flywheel Drives are still enabled right now, so any spurious feed from this is safe) //
-        // if(!decelerateBoltToSwitch()) {reverseBoltToSwitch();}														    //
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// TODO: Bregg Clean up firing code
         //Reset tach cycle counter
         goodTachCount = 0;
@@ -601,7 +615,8 @@ void loop(){
         OCR1B = 230;
         lastTriggerUp = millis(); //Not ACTUALLY trigger up any more due to the disconnector trap. A burst disconnect is a pseudo trigger up.
         //Main disconnector trap - This is where we land if firing ends and trigger is still down.
-	// Without burst firing, this shouldn't happen.
+	// This can happen if we encounter a `timeout` in the above firing code.
+	while(readTrigger()) { delay(2); }
       }
     }
   } else {
