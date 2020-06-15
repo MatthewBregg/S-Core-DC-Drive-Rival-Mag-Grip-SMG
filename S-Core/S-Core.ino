@@ -61,14 +61,6 @@ unsigned long startBlankTime  = 1;        //actually delay step for tach checks
 unsigned long failTime = 1000;            //Abort if drives don't either send tach pulses or reach set speed in a reasonable time.
 unsigned long lastTriggerDown;            //(ms) time trigger pulled
 
-////Speed/Analog control variables.
-unsigned long knobValueRaw;
-unsigned long knobValue;                  //10 bit ADC input for user knob
-unsigned long splValueRaw;
-unsigned long splValue;                   //10 bit ADC for SPL pot on board - Tournament lock
-unsigned long minROF = 300;               //In rounds per minute (or pusher motor RPM)
-unsigned long maxROF = 860;               //In rounds per minute (or pusher motor RPM) (Note this should be, at most, close but slightly higher to what runSpeedMax below enforces)
-unsigned long setpointROF;                //To store set ROF input
 unsigned long setpointGovernor;           //Convert RPM to governor (8 * TIMING_MAX)
 unsigned long motorPolepairs = 7;         //Pole order of your flywheel motors
 
@@ -606,42 +598,6 @@ void updateSpeedFixed(unsigned long setpointRPM) {
   setGovernorBoth();                                               //Eventually this ought to check the return value
 }
 
-void updateROF(void) {
-  //Set runSpeed from configured bolt speed absolute max (reliability), user configured min and max bolt rpm, and analog knob.
-  knobValueRaw = analogRead(A6) + 10;                      //There might be some stray voltage drop at full pot deflection
-  knobValue = constrain(knobValueRaw, 0, 1023);            //Limit to in range after compensating
-  setpointROF = map(knobValue, 0, 1023, minROF, maxROF);   //Map to minROF...maxROF range
-  setpointROF = (75000/setpointROF);                       //Convert to period
-  if(setpointROF < runSpeedMax) {setpointROF = runSpeedMax;} //Apply limit
-      // N rpm * 50 Pole Pairs in motor * 4 unity space vectors (=Full steps) for 2 phase motor = erpm
-      // erpm * 4 (Microstep mode 4:1) / 60 sec/min = Pulse frequency to driver (sec^-1)
-      // 1/f (sec) * 1000 ms/sec * 1000 us/ms = Pulse period in us. Simplify expression.
-  runSpeed = setpointROF;
-}
-  
-void updateSelector(void) {
-  //Check selector pins and update selector.
-  selectorLast = selector;
-  if(digitalRead(16)) {
-    //16 HIGH could be:
-    if(digitalRead(17)) {
-      //16 AND 17 HIGH ("centered" ...or unplugged)
-      selector = 1;
-    } else {
-      //16 HIGH 17 LOW ("rearward", may vary)
-      selector = 2;
-    }
-  } else {
-    //16 LOW ("forward", may vary)
-    selector = 0;
-  }
-  if(selector != selectorLast) {
-    //Changed. Do updates to all selector'd parameters:
-    isBurst = isBursts[selector];          //Disconn mask
-    burst = bursts[selector];              //Burst length
-  }
-}
-
 void setup(){
   //pin 2 and 3 tach external interrupt - Set AVR internal pullups.
   //This is measure/attempt to prevent noise on a floated pin from causing a race condition and LOCKING UP THE BOARD as soon as tachs are enabled if the CABLE GETS UNPLUGGED.
@@ -717,11 +673,6 @@ void loop(){
     //Verify set speed. Nb: Since this happens seamlessly after user-adjusting speed (the motors were still running) there is no "blip"
     speedtrap();                 //Bust any wrong flywheel speeds now before firing is allowed. Starts motors if they weren't already and shuts them down afterward.
     //Fell through = Cleared for launch.
-    //Initialize fire control and bolt speed
-    selector = 6;                //Illegal selector (Force updateSelector to do something, since the new selector value may be 0)
-    updateSelector();            //Configures disconnector enable and burst length per selector status and config
-    runSpeed = runSpeedMax;      //Backup. This should NEVER be necessary. That value should be immediately clobbered by updateROF(). 
-    updateROF();                 //Must set a bolt speed before firing.
     //clear flag
     firstRun = 0;
   }
@@ -813,17 +764,7 @@ void loop(){
     drive1TachValid = false;
     if((millis() - lastTriggerUp)>boltShutdownTime){
       //turn bolt motor current off
-      digitalWrite(8, HIGH);
-    }
-    
-    //Trigger UP lower priority busyworks - Selector. ROF.
-    if(OffCycleState == true) {
-      updateROF();            //This triggers an ADC read and does some math so it is the slower of the two.
-                              //It might be nicer to split up the ROF linearization and ADC read into 2 tasks.
-      OffCycleState = false;
-    } else {
-      updateSelector();       //Returns fast unless selector changed
-      OffCycleState = true;
+      // TODO bregg: Do I want to do anything here?
     }
   }
 }
