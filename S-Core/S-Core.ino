@@ -111,6 +111,43 @@ const int trigSwitchB = 7;
 
 const int voltimeter = A1;
 
+float calculate_voltage() {
+  //http://www.electroschematics.com/9351/arduino-digital-voltmeter/
+  constexpr double  R1 = 68100.0; // -see text!
+  constexpr double R2 =  10020.0; // -see text!
+  constexpr double multiplier = (R2 / (R1 + R2));
+  // Instead of dividing,
+  // used a voltimeter to measure at the analog read point,
+  // and then divided the actual bat voltage by the reading to get the multiplier,
+  // which is then hardcoded in.
+  float value = analogRead(voltimeter);
+  float vout = (value * 5.0) / 1024.0; // see text
+  float vin = vout / multiplier; // 8.65;
+  if (vin < 0.09) {
+    vin = 0.0; //statement to quash undesired reading !
+  }
+
+  return vin;
+
+}
+
+float get_motor_speed_factor(float volts) {
+  float value = volts / ((calculate_voltage() + calculate_voltage()) / 2.0);
+  if ( value < 1 ) {
+    return value;
+  }
+  return 1;
+
+}
+
+void set_pusher(bool on) {
+  if ( on ) {
+    analogWrite(PWM, 255.0 * get_motor_speed_factor(13));
+  } else {
+    analogWrite(PWM, 0);
+  }
+}
+
 bool readLimit() {
   return digitalRead(limitSwitchA) && !digitalRead(limitSwitchB);
 }
@@ -189,8 +226,8 @@ void selftest(){
   //Two highs is a broken or fouled switch, a bad connection or most likely, an unplugged cable.
   //Two lows is probably a short or the wrong device plugged into the trigger connector.
   
-  if(digitalRead(0) && digitalRead(1)) {die(2, 1);} //Major 2 minor 1: Trigger fault both inputs high
-  if(!digitalRead(0) && !digitalRead(1)) {die(2, 2);} //Major 2 minor 2: Trigger fault both inputs low
+  if(digitalRead(trigSwitchB) && digitalRead(trigSwitchA)) {die(2, 1);} //Major 2 minor 1: Trigger fault both inputs high
+  if(!digitalRead(trigSwitchB) && !digitalRead(trigSwitchA)) {die(2, 2);} //Major 2 minor 2: Trigger fault both inputs low
   
   //End trigger checks.
   
@@ -439,32 +476,17 @@ void setup(){
   EICRA = _BV(ISC11) | _BV(ISC10) | _BV(ISC01) | _BV(ISC00); //INT0 and INT1 triggered on rising edge
   EIMSK = 0b00000011; //INT0 and INT1 on
   sei();
+
+  pinMode(PWM, OUTPUT);
+  pinMode(limitSwitchA, INPUT);
+  pinMode(limitSwitchB, INPUT);
+  pinMode(trigSwitchA, INPUT);
+  pinMode(trigSwitchB, INPUT);
+  pinMode(voltimeter, INPUT);
+  // Set the pusher motor PWM carriar frequency to be a high frequency
+  // http://ceezblog.info/2018/07/10/arduino-timer-pwm-cheat-sheet/
+  TCCR2B = (TCCR2B & B11111000) | B00000001;
   
-  //bolt drive hardware setup
-  //DRV8825 stepper driver
-  //pin 19: direction
-  pinMode(19, OUTPUT);
-  //drive low
-  digitalWrite(19, LOW);
-  //pin 18: step
-  pinMode(18, OUTPUT);
-  //pin 4: bolt limit switch (has 1k external pullup)
-  pinMode(4, INPUT);
-  //pin 5,6,7: microstep mode select M2,M1,M0
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
-  //pin 8: enable
-  pinMode(8, OUTPUT);
-  //turn motor current off
-  digitalWrite(8, HIGH);
-  
-  //configure stepper driver parameters
-  //4:1 microstep
-  digitalWrite(5, LOW);
-  digitalWrite(6, HIGH);
-  digitalWrite(7, LOW);
- 
 }
 
 void loop(){
@@ -493,10 +515,8 @@ void loop(){
   disableGovernorInterrupt();    //It shouldn't have been on - make very sure
   //initial debounce on trigger from idle state. Safety measure.
   prevTrigState = currTrigState;
-  currTrigState = (digitalRead(0) && !digitalRead(1));
+  currTrigState = readTrigger();
   if(currTrigState && prevTrigState){
-    //turn motor current on
-    digitalWrite(8, LOW);
     //enable tachs
     enableTachInterrupts();
     //start flywheels
@@ -519,7 +539,7 @@ void loop(){
       OCR1A = 230;
       OCR1B = 230;
       //Trap trigger down state here. Require a trigger reset to reattempt.
-      while(digitalRead(0) && !digitalRead(1)) {delay(5);}
+      while(readTrigger()) {delay(5);}
       goodTachCount = 0;
       lastTriggerUp = millis();
     } else {
@@ -541,21 +561,39 @@ void loop(){
         OCR1A = 230;
         OCR1B = 230;
         //Trap trigger down state here. Require a trigger reset to reattempt.
-        while(digitalRead(0) && !digitalRead(1)) {delay(1);}
+        while(readTrigger()) {delay(1);}
         goodTachCount = 0;
         lastTriggerUp = millis();
       } else {
         //Successful acceleration: start firing.
         //Already know speed is good at this point, mute tach ISRs
         disableTachInterrupts();
-        fire();
-        //first sealed-in shot is over. Check trigger *quickly* for downness (Nb: We may be commutating the pusher right now) and fire again if down and called for. Trigger is PD0, PD1.
-        //This second fire() call may execute 0 times if isBurst is true and burstCounter starts as 1.
-        while((PIND & 0b00000001) && !(PIND & 0b00000010)) {
-          fire();
-        }
-        //Here, firing is definitely OVER. Get the bolt back safely to home position (N.b.: Flywheel Drives are still enabled right now, so any spurious feed from this is safe)
-        if(!decelerateBoltToSwitch()) {reverseBoltToSwitch();}
+	// TODO:Bregg Clean up firing code, at least add pusher stall protection.
+	set_pusher(true);
+	// IF not loaded load a ball
+	while (!readLimit()) {};
+	delay(5);
+	// Fire the loaded ball
+	while (readLimit()) {};
+	delay(5);
+	// While the trigger remains down, keep firing.
+	while(readTrigger()) {}
+	// Load a new ball, if not already loaded.
+	// Timeout on loading the new ball incase of empty mag/jam.
+	unsigned long stopped_firing_at = millis();
+	while (!readLimit() && ((millis()-stopped_firing_at) < 300)) {};
+	// Done firing.
+	set_pusher(false);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// fire();																				    //
+        // //first sealed-in shot is over. Check trigger *quickly* for downness and fire again if down and called for.								    //
+        // while(readTrigger()) {																		    //
+        //   fire();																				    //
+        // }																					    //
+        // //Here, firing is definitely OVER. Get the bolt back safely to home position (N.b.: Flywheel Drives are still enabled right now, so any spurious feed from this is safe) //
+        // if(!decelerateBoltToSwitch()) {reverseBoltToSwitch();}														    //
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// TODO: Bregg Clean up firing code
         //Reset tach cycle counter
         goodTachCount = 0;
         //Shut down drives only NOW:
