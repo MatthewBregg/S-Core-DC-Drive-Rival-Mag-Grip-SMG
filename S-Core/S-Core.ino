@@ -54,7 +54,11 @@ unsigned long minRPM = 5000;              //Fly speed command min (Set this appr
 unsigned long maxRPM = 44000;             //Fly speed command max (Set this appropriately. If the drive can't actually reach this speed you won't be able to fire!)
 unsigned long speedOffsetMargin;          //Consider tach in range if speedOffsetMargin is greater than (lower speed) speedSetpoint
 unsigned long speedOffsetMarginMin = 45;  //At low speed   (This compensates competing effects from period being 1/f, control loop performance, and tach resolution so isn't much more
-unsigned long speedOffsetMarginMax = 13;  //At max speed    than a fudge factor) ;; TODO: Do I need to update this?!
+// 21: 1/5 shots were slow... 13: Probably too much. (21+13)/2 = 17?
+// Nope, 17 didn't work either. Seems we really don't want to go much past 13.!
+// 16 actually seems good, actually, I think those 1/5 shots being slow might just be random variance, seems to occur at 13 also, so either 13 is still too much, or interpolation is wrong, or whatever.
+// We're talking values like 108 instead of 120 anyway, so I'm willing to ignore it.
+unsigned long speedOffsetMarginMax = 16;  //At max speed    than a fudge factor) ;; TODO: Do I need to update this?!
 // With the 25510 governer, we started firing at ~24K.  I set us to fire at about 38.2K when running at 40K RPM.  Hopefully that'll be be enough?
 int goodTachCount = 0;                    //counter for loops with good speed reading
 unsigned long startBlankTime  = 1;        //actually delay step for tach checks
@@ -501,7 +505,11 @@ void loop(){
     // Set the speed
     delay(100); //Some anti-noise buffer
     while(gov_update_repeats) {
-      updateSpeedFixed(30000); //Nb: updateGovernorBoth blocks while a packet is being transmitted, thus so does this call.
+      // 30K Full speed, 125-135.
+      // 25K Slightly slower, 120-130.
+      // 20K Very consistent 110s...
+      // 23K Very consistent 120s-125s. Seems roughly ideal.
+      updateSpeedFixed(23000); //Nb: updateGovernorBoth blocks while a packet is being transmitted, thus so does this call.
       delay(20); //Some anti-noise buffer
       gov_update_repeats--;
     }
@@ -571,7 +579,7 @@ void loop(){
         //Already know speed is good at this point, mute tach ISRs
         disableTachInterrupts();
 	unsigned long rev_time = millis() - started_revving;
-	if ( rev_time > 200 ) {
+	if ( rev_time > 175 ) {
 	  digitalWrite(LED_BUILTIN,HIGH);
 	}
 	// TODO:Bregg Clean up firing code, at least add pusher stall protection.
