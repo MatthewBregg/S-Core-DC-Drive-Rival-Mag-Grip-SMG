@@ -505,10 +505,13 @@ void loop(){
     // Set the speed
     delay(100); //Some anti-noise buffer
     while(gov_update_repeats) {
-      // 30K Full speed, 125-135.
+      // 30K Full speed, 125-135, but rev time > 200 MS.
       // 25K Slightly slower, 120-130.
       // 20K Very consistent 110s...
-      // 23K Very consistent 120s-125s. Seems roughly ideal.
+      // 23K Very consistent 120s-125s. Seems roughly ideal, rev time between 150 and 175 MS.
+      // Also keep in mind I plan on using ABS flywheels, which in theory should be significantly lighter and cut rev time down a fair bit!
+      // Other ideas would be to increase crush/inner wheel diameter/skimp on the infill/top/bottom/perimeters.
+      // But <175 MS FD really isn't bad, and if I really want a CQC focussed build I can just drop the FPS to ~100 and get much faster revs.
       updateSpeedFixed(23000); //Nb: updateGovernorBoth blocks while a packet is being transmitted, thus so does this call.
       delay(20); //Some anti-noise buffer
       gov_update_repeats--;
