@@ -54,7 +54,7 @@ https://www.pinterest.com/pin/847028642394336407/
 ** Electronics
 *** Test harness
 
-#+CAPTION: You'll want a pair of female bullets + a way to hook up the PCB. I used an XT60, which I then removed during and replaced with directly soldering during final assembly.
+ You'll want a pair of female bullets + a way to hook up the PCB. I used an XT60, which I then removed during and replaced with directly soldering during final assembly.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/test_harness.jpg]]
 
@@ -205,11 +205,11 @@ random start point.
 I followed the guide here to add a simple skirt to protect from drafts https://blog.prusaprinters.org/asa-prusament-is-here-learn-everything-about-the-successor-to-abs_30636/.
 
 *** Trigger
-#+CAPTION: Correct
+ Correct
 #+attr_html: :width 400px
 [[./documentation_images/plated/trigger_correct.png]]
 
-#+CAPTION: Incorrect
+ Incorrect
 #+attr_html: :width 400px
 [[./documentation_images/plated/trigger_incorrect.png]]
 Lay flat on the bed, make sure the side with the sacrificial layer is closer to the bed.
@@ -267,20 +267,20 @@ It's important to do this *before inserting the nuts*!
   - 3MM drill bit (M3 bit) or similar (2/16" would probably be acceptable).
     
 *** FWC Cage
-#+CAPTION:With the M3 bit, drill out the two holes by the main wire channels, don't drill the trigger guard holes, we already have nuts in there!
+With the M3 bit, drill out the two holes by the main wire channels, don't drill the trigger guard holes, we already have nuts in there!
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_holes_1_annotated-x.png]]
-#+CAPTION:Drill this hole too, careful, it's not too deep!
+Drill this hole too, careful, it's not too deep!
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_holes_2.jpg]]
-#+CAPTION:Don't forget these three front holes. Be careful with the inner ones, it's a long hole! Start from the back of the FWC, and go slow and easy.
+Don't forget these three front holes. Be careful with the inner ones, it's a long hole! Start from the back of the FWC, and go slow and easy.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_holes_4_annotated-x.png]]
-#+CAPTION: Ignore that this is from a later stage of the build.
+ Ignore that this is from a later stage of the build.
 #+attr_latex: :height 400px
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_holes_5_annotated-x.png]]
-#+CAPTION: There's a sacrificial layer behind the nut that'll need to be drilled out.
+ There's a sacrificial layer behind the nut that'll need to be drilled out.
 #+attr_latex: :height 400px
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_holes_3_annotated-x.png]]
@@ -293,17 +293,17 @@ Then return to the M3 bit.
 
 M3 Bit drill these holes.
 #+attr_latex: :height 400px
-#+CAPTION: Don't worry, those partial screw sockets form complete screw sockets deeper in the cover, and aren't weak.
+ Don't worry, those partial screw sockets form complete screw sockets deeper in the cover, and aren't weak.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_cover_annotated_1.png]]
 
-#+CAPTION:And this one
+And this one
 #+attr_latex: :width 400px
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_cover_annotated_2.jpg]]
 
 
-#+CAPTION: Also, grap the pusher mount, clamp them together, and drill out the FWC portion of the side panel m3 hole highlighted here. Do this for both covers.
+ Also, grap the pusher mount, clamp them together, and drill out the FWC portion of the side panel m3 hole highlighted here. Do this for both covers.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_cover_annotated_3.png]]
 
@@ -311,25 +311,25 @@ M3 Bit drill these holes.
 Use an exact knife and clean up the limit switch mount.
 #+attr_latex: :width 400px
 #+attr_html: :width 400px
-#+CAPTION: Look at this mess. 
+ Look at this mess. 
 [[./documentation_images/physical_build/used_images/pusher_annotated_1.png]]
-#+CAPTION: Much better.
+ Much better.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/pusher_limit_cleaned.png]]
 
 
-#+CAPTION:Using a 3/32 bit, pierce the two sacrificial layers for the limit switch mount. 
+Using a 3/32 bit, pierce the two sacrificial layers for the limit switch mount. 
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/limit_switch_mount_cleanup.png]]
-#+CAPTION:The holes for this go right up to the motor mount, so don't worry if you look like
+The holes for this go right up to the motor mount, so don't worry if you look like
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/limit_switch_mount_cleanup2.png]]
 
-#+CAPTION:M3 bit drilling time again. Clean out these 4 holes.
+M3 bit drilling time again. Clean out these 4 holes.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/pusher_mount_mounting_pattern_cleanup.png]]
 
-#+CAPTION:BTW, ignore this vestigial square nut insert, it's not used.
+BTW, ignore this vestigial square nut insert, it's not used.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/pusher_mount_vestigial.png]]
 
@@ -341,11 +341,11 @@ Don't drill out the PCB mounting pattern though!
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/grip_base_annotated_1.png]]
 
-#+CAPTION:Drill out the trigger switch hole, but only up to where the trigger rests!
+Drill out the trigger switch hole, but only up to where the trigger rests!
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/trigger_switch_drillout.png]]
 
-#+CAPTION:Oh, and don't forget the FWC mount pattern on the front of the grip.
+Oh, and don't forget the FWC mount pattern on the front of the grip.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_grip_mount_annotated.png]]
 
@@ -355,37 +355,37 @@ Don't drill out the PCB mounting pattern though!
 [[./documentation_images/physical_build/used_images/trigger_guard_1.jpg]]
 
 *** Blaster Top
-#+CAPTION: M3 bit drill through the two looonng screw holes. 
+ M3 bit drill through the two looonng screw holes. 
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/top_annotated_1.png]]
 
 *** Barrel
-#+CAPTION: M3 bit drill through the three short holes.  Excuse not having a real representation of this part on hand.
+ M3 bit drill through the three short holes.  Excuse not having a real representation of this part on hand.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/barrel_annotated_1.png]]
 
 *** Mag release (The bigger of the two parts)
-#+CAPTION: M3 bit drill through the two screw holes. Excuse not having a real representation of this part on hand.
+ M3 bit drill through the two screw holes. Excuse not having a real representation of this part on hand.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/mag_release_annotated_1.png]]
 
 *** Rear Section/Rear battery cover
-#+CAPTION: M3 Drill bit through the highlighted holes. Sacrificial layer again, make sure to pierce it. The actual screw holes for these 4 are fairly deep.
+ M3 Drill bit through the highlighted holes. Sacrificial layer again, make sure to pierce it. The actual screw holes for these 4 are fairly deep.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/rear_holes_annotated_2.png]]
-#+CAPTION: These too. No sacrificial layers or anything, so an easy drill.
+ These too. No sacrificial layers or anything, so an easy drill.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/rear_holes_annotated_1.png]]
-#+CAPTION: And these.
+ And these.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/rear_holes_annotated_3.png]]
 
 *** Flywheels
-#+CAPTION: The FWC come with a sacrificial layer we need to drill out.
+ The FWC come with a sacrificial layer we need to drill out.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/flywheel_sacrificial.png]]
 
-#+CAPTION: A 13/64 bit will do the job nicely here. Use an exacto to clean the hole of any threads.
+ A 13/64 bit will do the job nicely here. Use an exacto to clean the hole of any threads.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/cleaned_flywheel.jpg]]
 
@@ -400,56 +400,56 @@ The hex nuts are standard M3 hex nuts. Thickness isn't too important, although m
 *Screw Pulling Technique (AKA, inserting hex nuts): Borrowing from PRUSA again, all the hex nuts will be inserted with this method. See 
 https://help.prusa3d.com/en/guide/1-introduction_54032 for a guide to screw pulling nuts.
 
-#+CAPTION: Cleaning an insert slot with a flat head.
+ Cleaning an insert slot with a flat head.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/nut_cleaning.jpg]]
 
 *** FWC
-#+CAPTION: Two on top. A dab of super glue is advised to ensure they stay put during the next build steps.
+ Two on top. A dab of super glue is advised to ensure they stay put during the next build steps.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_nuts_a.png]]
-#+CAPTION: One on each side. These can be a PITA to clean after the sacrificial layer is drilled.
+ One on each side. These can be a PITA to clean after the sacrificial layer is drilled.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_nuts_b.png]]
 
 *** Grip Insert
-#+CAPTION: These should be an easy insert. 
+ These should be an easy insert. 
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/grip_nuts_a.png]]
-#+CAPTION: Get the magazine catch nuts in too, they shouldn't be too hard.
+ Get the magazine catch nuts in too, they shouldn't be too hard.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/grip_nuts_b.png]]
-#+CAPTION: Pusher mount nuts. Sacrificial layer, this are a PITA
+ Pusher mount nuts. Sacrificial layer, this are a PITA
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/grip_nuts_c.png]]
 
 *** FWC Cover
-#+CAPTION:Start by screw pulling hex nuts.  Yes, there's one nut that's just randomly on the other side.  Oops. Works all the same.
+Start by screw pulling hex nuts.  Yes, there's one nut that's just randomly on the other side.  Oops. Works all the same.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_cover_nuts_a.png]]
 
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/pulling_nut.jpg]]
 
-#+CAPTION:Each cover has a square nut insert on the bottom here. This is a pretty annoying one, as there was a sacrificial layer.
+Each cover has a square nut insert on the bottom here. This is a pretty annoying one, as there was a sacrificial layer.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_cover_nuts_b.png]]
 
-#+CAPTION:Oh, and don't worry about this yet. This is for a square nut to hold the barrel, and a nyloc hex nut + screw which forms the hop up. We'll add those during assembly, they will just fall out if you add them here.
+Oh, and don't worry about this yet. This is for a square nut to hold the barrel, and a nyloc hex nut + screw which forms the hop up. We'll add those during assembly, they will just fall out if you add them here.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/hop_up_annotated.png]]
 
 *** REAR Battery section
-#+CAPTION:Circles: Hex nut insert (both sides). Squares: Square nut inserts (sacrificial layer again) (both sides).
+Circles: Hex nut insert (both sides). Squares: Square nut inserts (sacrificial layer again) (both sides).
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/rear_nuts_insert_a.png]]
 
-#+CAPTION:Circles: Hex nut insert, *ONE SIDE ONLY*. Squares: Square nut inserts (easy this time) (both sides).
+Circles: Hex nut insert, *ONE SIDE ONLY*. Squares: Square nut inserts (easy this time) (both sides).
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/rear_nuts_insert_b.png]]
 
 *** Pusher mount
-#+CAPTION:Slot square nuts into the slots here. A dab of super glue can help keep these in place during assembly.
+Slot square nuts into the slots here. A dab of super glue can help keep these in place during assembly.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/pusher_mount_nuts.png]]
 
@@ -462,11 +462,11 @@ We use some 3mm ID 6mm (3x6x2.5mm MR63ZZ) OD bearings for the
 You will need 3 in total.
 
 *** Trigger
-#+CAPTION:Clean up the trigger. An exacto knife around the bearing insert area will probably be needed to get the bearing in.
+Clean up the trigger. An exacto knife around the bearing insert area will probably be needed to get the bearing in.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/trigger_bearing_1.jpg]]
 
-#+CAPTION: Work the bearings into place, they should essentially wind up flat againt the trigger faces.
+ Work the bearings into place, they should essentially wind up flat againt the trigger faces.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/trigger_bearing_2.jpg]]
 
@@ -474,13 +474,13 @@ No special tricks for this one, the screw pull technique didn't work too well, i
 
 
 *** Pusher
-#+CAPTION:Push this into place. Get it slightly seated. 
+Push this into place. Get it slightly seated. 
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/bearing_pusher.png]]
-#+CAPTION:Now using: A: An m3 washer, B: The bearing, C: A hex nut, screw pull the bearing into place. Don't over tighten and break the plastic shelf the bearing sits on.
+Now using: A: An m3 washer, B: The bearing, C: A hex nut, screw pull the bearing into place. Don't over tighten and break the plastic shelf the bearing sits on.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/bearing_pusher_2.png]]
-#+CAPTION: You will need pliers to hold the nut in place while screwing in.
+ You will need pliers to hold the nut in place while screwing in.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/bearing_pusher_3.jpg]]
 
@@ -490,7 +490,7 @@ Now a good to mount our switches.
 This build uses two DC-1 submini chery switches.
 These to be exact, https://www.digikey.com/product-detail/en/zf-electronics/DC1C-A1LB/CH291-ND/280837.
 
-#+CAPTION: The switch, and the 3 pin header we will be soldering it to.
+ The switch, and the 3 pin header we will be soldering it to.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/switch.jpg]]
 
@@ -508,11 +508,11 @@ Get a dremel cutting wheel, or a pair of snips.
 Be precise here, this one matters a lot, and is sensitive to slight changes. 
 Too much, and you will have a ball pop out sometimes when a non empty magazine is released (the ball in the chamber will be allowed to go too far forward, semi-loading the next ball). 
 Too little, and the motor won't be able to stop in time, and you will wind up with double feeding and mini runaways (I'd need to double check what the code actual does here).
-#+CAPTION: Cut the lever to a just under 9.5 mm.
+ Cut the lever to a just under 9.5 mm.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/limit_switch_lever_length.jpg]]
 **** Trigger
-#+CAPTION: Less precise, and easy to test. Unlike the limit switch, this switch is easy to remove and trim further if needed, so feel free to leave a bit of leeway and trim down based on trigger feel once assembled.
+ Less precise, and easy to test. Unlike the limit switch, this switch is easy to remove and trim further if needed, so feel free to leave a bit of leeway and trim down based on trigger feel once assembled.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/trigger_level_length.jpg]]
 
@@ -526,10 +526,10 @@ For the trigger, you'll want at least the length of the blaster.
 
 **** Trigger
 
-#+CAPTION: Fish the wires through the channel in the FWC. They will come out into one of the motor lead raceways.
+ Fish the wires through the channel in the FWC. They will come out into one of the motor lead raceways.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/trigger_switch_mount.jpg]]
-#+CAPTION: Use a pair of 10 mm countersunk (total length, which with countersunk I believe includes the head height, so M2x10mm countersunk) M2 screws to screw the switch down. Gentle here, we are threading into plastic.
+ Use a pair of 10 mm countersunk (total length, which with countersunk I believe includes the head height, so M2x10mm countersunk) M2 screws to screw the switch down. Gentle here, we are threading into plastic.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/mounted_trig_switch.jpg]]
 
@@ -537,11 +537,11 @@ For the trigger, you'll want at least the length of the blaster.
 **** Limit
 You will need a pair of M2.5x12.
 
-#+CAPTION: Quick pause here. When orientated and inserted correctly, the limit switch will look like this.  The ball will smoothly press against the level as it rolls out.  Make sure not to install the switch with the edge of the lever pointing towards the ball!
+ Quick pause here. When orientated and inserted correctly, the limit switch will look like this.  The ball will smoothly press against the level as it rolls out.  Make sure not to install the switch with the edge of the lever pointing towards the ball!
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/limit_orientation.jpg]]
 
-#+CAPTION: Ok, with that in mind, slide the switch into the pusher mount (correctly orientated!), line up the holes in the switch with the M2.5 holes, and switch the switch down.
+ Ok, with that in mind, slide the switch into the pusher mount (correctly orientated!), line up the holes in the switch with the M2.5 holes, and switch the switch down.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/limit_install.png]]
 
@@ -550,7 +550,7 @@ Now feed the wires into the wire channel the bottom arrow points to.
 
 Done, the limit switch is installed!
 
-#+CAPTION: If your switch screws protude here, they're too long. (Double check you used M2.5x12).
+ If your switch screws protude here, they're too long. (Double check you used M2.5x12).
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/limit_switch_too_long.png]]
 
@@ -558,21 +558,21 @@ Done, the limit switch is installed!
 ** Trigger Installation
 Slide the trigger into the grove in the grip.
 
-#+CAPTION: Get a M3x30mm, and screw it in. Be careful when tightening down here, if the screw isn't aligned you don't want to drive the screw into the bearing.
+ Get a M3x30mm, and screw it in. Be careful when tightening down here, if the screw isn't aligned you don't want to drive the screw into the bearing.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/trigger_screw_down.png]]
 
 No nut or insert here to screw into, just plastic. But it's also just the trigger, and this screw isn't going anywhere.  The first half should be easy, as you drilled it out. The second half will secure the screw, and be a bit of a PITA to screw into.
 
 ** Flywheel mounting onto motor
-#+CAPTION:Notice the pattern on the flywheel.
+Notice the pattern on the flywheel.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/flywheel.jpg]]
 
 Line this up with the recesses on your motor, and push.
 The pattern will keep the flywheel locked to the motor while you then tighten the nut onto the motor shaft. 
 
-#+CAPTION: The flywheel bottom/motor rim should be about 1.25 mm apart in the z plane. Check with your calipers z-plane. If it's off, check your motor is aligned with the flywheel pattern in the above image. 
+ The flywheel bottom/motor rim should be about 1.25 mm apart in the z plane. Check with your calipers z-plane. If it's off, check your motor is aligned with the flywheel pattern in the above image. 
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/installed_flywheel.png]]
 
@@ -584,7 +584,7 @@ This is a bit of a simple section, it's pretty easy to install these flywheels, 
 This will be another simple chapter.
 Use the longer set of screws that the motors came with, and screw them into the FWC.
 
-#+CAPTION:Be sure to line up the leads towards the front of the FWC, the leads will go under, and then back up through the two big wire race ways in the FWC front portion.
+Be sure to line up the leads towards the front of the FWC, the leads will go under, and then back up through the two big wire race ways in the FWC front portion.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/motor_orientation.png]]
 
@@ -597,15 +597,15 @@ Ensure the flywheels can spin freely. If they rub against each other, take them 
 It's finally time! The parts are processed, and we are ready to begin combining them into a blaster!
 We'll start with the FWC and the grip base.  
 
-#+CAPTION: The FWC should look like this now, with the switch and motors/flywheels mounted.
+ The FWC should look like this now, with the switch and motors/flywheels mounted.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_assembly_a.jpg]]
 
-#+CAPTION: Get 2x M3x45mm screws, and screw them into the FWC front until they just peek through.
+ Get 2x M3x45mm screws, and screw them into the FWC front until they just peek through.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_screws_peeking.jpg]]
 
-#+CAPTION: Screw down, will look like this.
+ Screw down, will look like this.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/combined_fwc_gripo.jpg]]
 
@@ -616,11 +616,11 @@ Now is a good time to check the trigger action and adjust that as well.
 - Limit switch side: 2x M3x20mm screws.
 - Bearing side: 2x M3x16mm screws.
 
-#+CAPTION: Drop the screws into their appropriate holes.
+ Drop the screws into their appropriate holes.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/pusher_mount_screws.png]]
 
-#+CAPTION: Screw down, will look like this.
+ Screw down, will look like this.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/pusher_mount_mounted.jpg]]
 
@@ -629,29 +629,29 @@ Now is a good time to check the trigger action and adjust that as well.
 - Solder some thinner AWG (I used 24 AWG here) wire onto the pusher motor). 
 - Get the spinner.
 - Note on the spinner how one side has a D shaped hole, and another side a normal 3mm circular hole.
-#+CAPTION: Using an M3x8mm screw, where the red arrow is, screw the pusher into place.
+ Using an M3x8mm screw, where the red arrow is, screw the pusher into place.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/spinner_inserted.png]]
 
 Screw tight, but not over tight. We are threading into plastic. 
 Then release oneish turn. The pusher should spin freely, but not wiggle too much.
 
-#+CAPTION: Now add the motor. Take the motor, and slot it into place. Turn the spinner until the D lines up, and the shaft fairly easily slides into the D shaped hole. Do not force it, it will go in fairly easily.
+ Now add the motor. Take the motor, and slot it into place. Turn the spinner until the D lines up, and the shaft fairly easily slides into the D shaped hole. Do not force it, it will go in fairly easily.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/spinner_inserted_2.png]]
 
-#+CAPTION: Lastly, pay attention to wire management, it's important here! The pusher motor will hold the limit switch wires out of the way. Ensure they look like the highlighted portion in the image, and pull them *gently* taught. Both the limit switch and pusher motor wiring must go through the wire guide in the pusher mount.
+ Lastly, pay attention to wire management, it's important here! The pusher motor will hold the limit switch wires out of the way. Ensure they look like the highlighted portion in the image, and pull them *gently* taught. Both the limit switch and pusher motor wiring must go through the wire guide in the pusher mount.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/spinner_inserted_3.png]]
 
-#+CAPTION: Ensure the pusher motor backing is flat against the pusher mount. For now it's merely friction fitted, but once fully assembled, the side panel will hold it in place.
+ Ensure the pusher motor backing is flat against the pusher mount. For now it's merely friction fitted, but once fully assembled, the side panel will hold it in place.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/pusher_motor_flat.png]]
 ** Mounting the PCB
 Prepare two M2x5mm countersunk screws. Similar to what is used for brushed superstock flywheel cages.
 
 
-#+CAPTION: Now mount the PCB. Again, threading small threads into platic, we just need to hold the PCB in place. Be gentle.
+ Now mount the PCB. Again, threading small threads into platic, we just need to hold the PCB in place. Be gentle.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/pcb_mounted.png]]
 
@@ -663,17 +663,17 @@ Prepare two M2x5mm countersunk screws. Similar to what is used for brushed super
 
 *** Threading the wires and testing wheel directions
 
-#+CAPTION: Thread the motor and trigger switch wires through their respective covers. 
+ Thread the motor and trigger switch wires through their respective covers. 
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_covers_cables_threaded.png]]
 
-#+CAPTION: Plug in the ESCS. Solder a 3 pin header onto the trigger and limit if not already done, and plug in. Plug the ESCs power leads and PCB power leads into some form of wiring harness. It's testing time.
+ Plug in the ESCS. Solder a 3 pin header onto the trigger and limit if not already done, and plug in. Plug the ESCs power leads and PCB power leads into some form of wiring harness. It's testing time.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/jank_1.jpg]]
 
 
 Connect the ESCs to the PCB.
-#+CAPTION: For the ESC signal headers, GND goes away from the MCU, and towards the back of the blaster.
+ For the ESC signal headers, GND goes away from the MCU, and towards the back of the blaster.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/pcb_wired.png]]
 
@@ -688,43 +688,43 @@ Oh, and mark the trigger switch correct orientation with a sharpie or something 
 *** Actual assembly
 
 - Prepare 6xM3x45mm screws.
-#+CAPTION: Prepare an M3x12mm screw inside a nyloc nut as shown.
+ Prepare an M3x12mm screw inside a nyloc nut as shown.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/nyloc_prepare.jpg]]
 
-#+CAPTION: Place the nyloc + screw and a square nut into a FWC cover as shown.
+ Place the nyloc + screw and a square nut into a FWC cover as shown.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/nyloc_square_nut_prepare.png]]
 
-#+CAPTION: Note the ESC/Trigger wire raceway.  Ensure on both covers, that the ESC/Trigger wires look like this when you close them up. They must be above the shelf.
+ Note the ESC/Trigger wire raceway.  Ensure on both covers, that the ESC/Trigger wires look like this when you close them up. They must be above the shelf.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/ESC_wire_raceway.png]]
 
-#+CAPTION: While pulling the wires in, pack the ESC into the FWC cover compartment.
+ While pulling the wires in, pack the ESC into the FWC cover compartment.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/esc_packing.jpg]]
 
-#+CAPTION: Proceed to mount the FWC cover above the FWC cage, and screw the bottom screw in first.
+ Proceed to mount the FWC cover above the FWC cage, and screw the bottom screw in first.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/mounting_fwc_cover_a.jpg]]
 
 Repeat this process for the other cover, being careful that the square nut and nyloc inserted into the first cover don't fall out. 
 
-#+CAPTION: Also be mindful of the top square nuts in the pusher mount. Make sure they stay in place for both covers.
+ Also be mindful of the top square nuts in the pusher mount. Make sure they stay in place for both covers.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/pusher_mount_nuts.png]]
 
 The other cover can be a bit tricky to mount, but with a bit of flex, it will go in. Don't over muscle it and crack a part though!
 
 
-#+CAPTION: This is the nut side, but proceed to use 4xM3x45mm screws to connect the two covers. Tighten reasonably well, especially in front so the nyloc nut doesn't strip it's recess. Also note how there's one hole here we are NOT filling yet.
+ This is the nut side, but proceed to use 4xM3x45mm screws to connect the two covers. Tighten reasonably well, especially in front so the nyloc nut doesn't strip it's recess. Also note how there's one hole here we are NOT filling yet.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_cover_nut_side.png]]
 
 
 
 *** Test
-#+CAPTION:Starting to look like a blaster now, right?
+Starting to look like a blaster now, right?
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/covers_on.jpg]]
 
@@ -744,37 +744,37 @@ Congrats! You've got a working blaster! Sure, there's no where to put the batter
   
 I'd advise using a pair of bullet connectors on the power switch to enable easy connection/disconnection and removal of the rear without soldering.
 
-#+CAPTION: You should wind up with something like this.
+ You should wind up with something like this.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/rear_power.jpg]]
 
 Prepare 4xM3x12mm.
-#+CAPTION: Wire everything up. Ensure your motor, trigger, and limit switches are connected, and low enough of a height that the rear cover can fit over them. If it can't rectify that. Wire up a harness, place the rear over the grip, and screw and tighten. See the next image for how the battery lead can be routed.
+ Wire everything up. Ensure your motor, trigger, and limit switches are connected, and low enough of a height that the rear cover can fit over them. If it can't rectify that. Wire up a harness, place the rear over the grip, and screw and tighten. See the next image for how the battery lead can be routed.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/rear_closing.jpg]]
 
-#+CAPTION: From the XT60 connector, I dip into the FWC_cover area, turn around, and then go over the shelf and drop the leads into the electronics compartment below the battery. Inside there, the ESCs power leads + PCB power leads are connected via bullets.
+ From the XT60 connector, I dip into the FWC_cover area, turn around, and then go over the shelf and drop the leads into the electronics compartment below the battery. Inside there, the ESCs power leads + PCB power leads are connected via bullets.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/wire_routing.png]]
 
 
 
 ** Trigger Guard
-#+CAPTION:Snap the back of the trigger guard into the mag well.
+Snap the back of the trigger guard into the mag well.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/trigger_guard.jpg]]
 
 Use 2xM3x12mm screws to screw it into the FWC, using the captive nuts we inserted during printing.
 
 ** Side panels Assembly
-#+CAPTION: Prepare 3xM3x6mm screws, and tighten down.
+ Prepare 3xM3x6mm screws, and tighten down.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/side_panel.png]]
 
 Now's a good time to glue the mystery machine logo on! See the glue section!
 
 ** Barrel Assembly
-#+CAPTION: Prepare 3xM3x6mm screws, and tighten down. 
+ Prepare 3xM3x6mm screws, and tighten down. 
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/barrel.png]]
 
