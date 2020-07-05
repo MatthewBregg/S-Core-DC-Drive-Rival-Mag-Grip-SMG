@@ -589,7 +589,7 @@ void loop(){
 	set_pusher(true);
 	// IF not loaded load a ball
 	// Timeout on all operations in case of empty mag/jams.
-	unsigned long timeout = 600;
+	unsigned long timeout = 700;
 	unsigned long timout_counter = millis();
 	bool timed_out = false;
 	while (!readLimit() && !timed_out) {
@@ -696,4 +696,3 @@ ISR(TIMER1_COMPA_vect) {
   //Here is where the inactive state lands when this ISR is on and waiting for gov_enable_strobe.
   //Do nothing. Don't mod anything because foreground code is probably loading variables right now.
 }
-
