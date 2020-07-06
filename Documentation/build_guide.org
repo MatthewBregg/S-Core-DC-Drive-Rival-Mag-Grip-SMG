@@ -158,7 +158,7 @@ Axle that connects to the motor (D shaped hole) on the build plate.
 [[./documentation_images/plated/fwc_cage_captive_nut_2.png]]
 
 #+attr_html: :width 400px
-[[./documentation_images/plated/fwc_cage_captive_nut_one.png]]
+[[./documentation_images/plated/fwc_captive_nut_one.png]]
 
 Print standing up, see screenshot.
 Two captive nuts for trigger guard, important to stop the print, and insert those captive nuts at the correct location!
@@ -180,16 +180,19 @@ I used .9mm non-top infill to speed up the print.
 *** Rear
 #+attr_html: :width 400px
 [[./documentation_images/plated/rear_orientation.png]]
+
 Print up right (screenshot), any settings.
 
 *** Pusher mount
 #+attr_html: :width 400px
 [[./documentation_images/plated/pusher.png]]
+
 - Print upright, see screenshot
 - Designed for .2mm layer height.
 *** FWC covers
 #+attr_html: :width 400px
 [[./documentation_images/plated/fwc_covers_and_pusher_mount.png]]
+
 100% infill for noise reduction.
 
 *** Blaster top
@@ -201,7 +204,7 @@ Lay flat. Supports on build plate only.
 *** FLywheels
 #+attr_html: :width 400px
 [[./documentation_images/plated/flywheel_orientation.png]]
-- PETG flywheels weighed 10 grams, got < 200 ms spinup with my chosen RPM/velocity (130s).
+- PETG flywheels weighed 10 grams, got < 200 ms spinup with my chosen RPM/velocity (130fps).
 
 I decided to go to ASA to get a bit lighter/stronger wheels.
 
@@ -221,6 +224,7 @@ I followed the guide here to add a simple skirt to protect from drafts https://b
  Incorrect
 #+attr_html: :width 400px
 [[./documentation_images/plated/trigger_incorrect.png]]
+
 Lay flat on the bed, make sure the side with the sacrificial layer is closer to the bed.
 See the images.
 
@@ -239,6 +243,7 @@ Print barrel aimed upwards, like you're shooting straight up.
 *** Mag Release
 #+attr_html: :width 400px
 [[./documentation_images/plated/magazine_release.png]]
+
 See image. Supports on build plate only. 
 
 
@@ -279,17 +284,25 @@ It's important to do this *before inserting the nuts*!
 With the M3 bit, drill out the two holes by the main wire channels, don't drill the trigger guard holes, we already have nuts in there!
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_holes_1_annotated-x.png]]
+
 Drill this hole too, careful, it's not too deep!
+
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_holes_2.jpg]]
+
 Don't forget these front holes. Be careful with the inner ones, it's a long hole! Start from the back of the FWC, and go slow and easy.
+
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_holes_4_annotated-x.png]]
- Ignore that this is from a later stage of the build.
+
+ Ignore that this is from a later stage of the build with the flywheels and switch already installed.
+
 #+attr_latex: :height 400px
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_holes_5_annotated-x.png]]
+
  There's a sacrificial layer behind the nut that'll need to be drilled out.
+
 #+attr_latex: :height 400px
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_holes_3_annotated-x.png]]
@@ -380,12 +393,17 @@ Oh, and don't forget the FWC mount pattern on the front of the grip.
 
 *** Rear Section/Rear battery cover
  M3 Drill bit through the highlighted holes. Sacrificial layer again, make sure to pierce it. The actual screw holes for these 4 are fairly deep.
+
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/rear_holes_annotated_2.png]]
+
  These too. No sacrificial layers or anything, so an easy drill.
+
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/rear_holes_annotated_1.png]]
+
  And these.
+
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/rear_holes_annotated_3.png]]
 
@@ -417,6 +435,7 @@ https://help.prusa3d.com/en/guide/1-introduction_54032 for a guide to screw pull
  Two on top. A dab of super glue is advised to ensure they stay put during the next build steps.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_nuts_a.png]]
+
  One on each side. These can be a PITA to clean after the sacrificial layer is drilled.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_nuts_b.png]]
@@ -425,9 +444,11 @@ https://help.prusa3d.com/en/guide/1-introduction_54032 for a guide to screw pull
  These should be an easy insert. 
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/grip_nuts_a.png]]
+
  Get the magazine catch nuts in too, they shouldn't be too hard.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/grip_nuts_b.png]]
+
  Pusher mount nuts. Sacrificial layer, this are a PITA
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/grip_nuts_c.png]]
@@ -486,9 +507,11 @@ No special tricks for this one, the screw pull technique didn't work too well, i
 Push this into place. Get it slightly seated. 
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/bearing_pusher.png]]
+
 Now using: A: An m3 washer, B: The bearing, C: A hex nut, screw pull the bearing into place. Don't over tighten and break the plastic shelf the bearing sits on.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/bearing_pusher_2.png]]
+
  You will need pliers to hold the nut in place while screwing in.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/bearing_pusher_3.jpg]]
@@ -581,7 +604,7 @@ Notice the pattern on the flywheel.
 Line this up with the recesses on your motor, and push.
 The pattern will keep the flywheel locked to the motor while you then tighten the nut onto the motor shaft. 
 
- The flywheel bottom/motor rim should be about 1.25 mm apart in the z plane. Check with your calipers z-plane. If it's off, check your motor is aligned with the flywheel pattern in the above image. 
+ The flywheel bottom/motor rim should be about 1.25 mm apart in the z plane. Check with your calipers depth gauge. If it's off, check your motor is aligned with the flywheel pattern in the above image. 
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/installed_flywheel.png]]
 
