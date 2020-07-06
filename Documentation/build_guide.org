@@ -194,6 +194,7 @@ Print up right (screenshot), any settings.
 [[./documentation_images/plated/fwc_covers_and_pusher_mount.png]]
 
 100% infill for noise reduction.
+(Ignore the pusher mount in this plating)
 
 *** Blaster top
 #+attr_html: :width 400px
