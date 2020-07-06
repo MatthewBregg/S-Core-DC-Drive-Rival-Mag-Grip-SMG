@@ -788,8 +788,7 @@ Now's a good time to glue the mystery machine logo on! See the glue section!
 - Put a bit of lube on the magazine catch, and the magazine nub slide (the thing the nub on rival magazines slides against to release all the balls). 
 - Remember that nyloc nut and screw from earlier? That's the hop up. Adjust it in small increments with an 2.5mm ball driver until satisfied.  Using a ball driver, you can get to it with the barrel attached.
   
-- STP files? Just ask, I plan to put them up soon anyway. For now I'm a bit tired after assembling/writing this guide.
-  
+- STEP files are included in the release.
 
 * Conclusion
 And that's all!
