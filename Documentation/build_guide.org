@@ -644,6 +644,35 @@ We'll start with the FWC and the grip base.
 
 Now is a good time to check the trigger action and adjust that as well.
 
+
+
+** Installing the magazine catch
+
+The magazine catch/retention system consists of two sections.
+
+The catch, which actually holds the magazine in palce.
+The magazine body, which holds the catch + spring.
+You will need a beefy <8mm spring. 
+
+- Place the spring into the magazine body, into the spring hole.
+  #+attr_html: :width 400px
+  [[./documentation_images/physical_build/used_images/mag_catch_spring.png]]
+- Place the  catch into the magazine body.
+  - Catch orientation is very important here! The top of the catch is rounded, the bottom is square. Look for the square edge, and ensure they will point down towards the bottom of the magazine!
+  #+attr_html: :width 400px
+  [[./documentation_images/physical_build/used_images/mag_catch_orientation.png]]
+- Use a finger to hold the catch in place against spring tension, and push the magazine body into position in the magazine.
+  #+attr_html: :width 400px
+  [[./documentation_images/physical_build/used_images/mag_catch_insert.jpg]]
+- Use 2xM3x12MM screws to screw down.
+  #+attr_html: :width 400px
+  [[./documentation_images/physical_build/used_images/mag_catch_installed.jpg]]
+- Dab of lube on the mag catch.
+- Test insertation/removal.
+- Test the magazine doesn't drop out.
+- Test the magazine fits nicely and balls flow, and can't be every so slightly dislodged so that it looks like it's in, but balls aren't released due to the nub. 
+- If any of the above happens, adjust the spring. Otherwise, proceed.
+
 ** Grip + Pusher Mount Assembly
 - Limit switch side: 2x M3x20mm screws.
 - Bearing side: 2x M3x16mm screws.
@@ -686,9 +715,6 @@ Prepare two M2x5mm countersunk screws. Similar to what is used for brushed super
  Now mount the PCB. Again, threading small threads into platic, we just need to hold the PCB in place. Be gentle.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/pcb_mounted.png]]
-
-** Installing the magazine catch
-2xM3x12mm screws
 
 
 ** FWC + FWC Covers assembly
