@@ -10,6 +10,7 @@ https://github.com/MatthewBregg/S-Core-DC-Drive-Rival-Mag-Grip-SMG/releases/tag/
 * Intro
 ** Overview
 You will need...
+- 7-Type N20 pusher motor. 600 RPM is what I believe I used, (but I'm honestly not 100 sure, the label was long degraded... Certainly something in the 600-1000 RPM range... Figuring out exactly what RPM motor I used is a big TODO for this guide). 
 - A 2.5mm ball driver for M3 screws 
 - M3 screws, hex socket cap. < 3mm head height, < 6mm head diameter.
   - M3x30mm, 8xM3x45, 2xM3x20, 2xM3x16, M3x8, 9xM3x12, 6xM3x6
