@@ -1,6 +1,8 @@
 
 * Pretty images of the blaster
-TODO.
+[[./documentation_images/rotated.JPG]]
+[[./documentation_images/DSC06011.JPG]]
+[[./documentation_images/DSC06013.JPG]]
 
 * Intro
 ** Overview
