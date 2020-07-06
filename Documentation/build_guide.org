@@ -63,7 +63,7 @@ https://www.pinterest.com/pin/847028642394336407/
 ** Electronics
 *** Test harness
 
- You'll want a pair of female bullets + a way to hook up the PCB. I used an XT60, which I then removed during and replaced with directly soldering during final assembly.
+ You'll want a pair of female bullets + a way to hook up the PCB. I used an XT60, which I then removed and directly soldering onto the v_batt and gnd rails during final assembly.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/test_harness.jpg]]
 
@@ -189,7 +189,7 @@ Print up right (screenshot), any settings.
 - Designed for .2mm layer height.
 *** FWC covers
 #+attr_html: :width 400px
-[[./documentation_images/plated/pusher.png]]
+[[./documentation_images/plated/fwc_covers_and_pusher_mount.png]]
 100% infill for noise reduction.
 
 *** Blaster top
@@ -282,7 +282,7 @@ With the M3 bit, drill out the two holes by the main wire channels, don't drill 
 Drill this hole too, careful, it's not too deep!
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_holes_2.jpg]]
-Don't forget these three front holes. Be careful with the inner ones, it's a long hole! Start from the back of the FWC, and go slow and easy.
+Don't forget these front holes. Be careful with the inner ones, it's a long hole! Start from the back of the FWC, and go slow and easy.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/fwc_holes_4_annotated-x.png]]
  Ignore that this is from a later stage of the build.
