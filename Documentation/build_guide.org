@@ -29,7 +29,7 @@ You will need...
 - Bullet connectors, soldering equipment, XT60, ESCS.
 - [[https://emaxmodel.com/rs1606-brushless-racing-motor.html][A pair of EMAX 1606 brushless motors.]] (3300KV). (And the correct hex key to install the motor).
 - A glue, preferably devcon plastiweld for the cosmetics and magazine side panels. (optional). 
-- A drill with an M3 bit, and associated imperial bits.
+- A drill with a M3 bit, and associated imperial bits.
 - PCB and electronics (See the PCB section). 
   - Or a willingness to recreate my PCB on perfboard :).
     - Or a willingness to create an entirely new schematic and firmware for whatever driving configuration you want!
@@ -344,6 +344,7 @@ Use an exact knife and clean up the limit switch mount.
 Using a 3/32 bit, pierce the two sacrificial layers for the limit switch mount. 
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/limit_switch_mount_cleanup.png]]
+
 The holes for this go right up to the motor mount, so don't worry if you look like
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/limit_switch_mount_cleanup2.png]]
@@ -552,7 +553,7 @@ Too little, and the motor won't be able to stop in time, and you will wind up wi
 
 *** Mounting
 First, solder 3 high AWG cables to the each switch. 
-I used 24 AWG stranded silicone hobby wire. Too thick and you'll have trouble fishing it through the blaster, too thin and you risk the wire breaking from slight strain.  There is plenty of room for higher wire gauges, but 18 AWG would certainly be pushing it.
+I used 24 AWG stranded silicone hobby wire. Too thick and you'll have trouble fishing it through the blaster, too thin and you risk the wire breaking from slight strain.  There is plenty of room for a bit lower wire gauges, but 18 AWG would certainly be pushing it.
 
 Length wise, 24 AWG is cheap, so I just used 1-2 feet of the stuff and cut down to length later. 
 For the trigger, you'll want at least the length of the blaster.
@@ -808,7 +809,7 @@ I'd advise using a pair of bullet connectors on the power switch to enable easy 
 [[./documentation_images/physical_build/used_images/rear_power.jpg]]
 
 Prepare 4xM3x12mm.
- Wire everything up. Ensure your motor, trigger, and limit switches are connected, and low enough of a height that the rear cover can fit over them. If it can't rectify that. Wire up a harness, place the rear over the grip, and screw and tighten. See the next image for how the battery lead can be routed.
+ Wire everything up. Ensure your motor, trigger, and limit switches are connected, and low enough of a height that the rear cover can fit over them. If it can't, rectify that via resoldering/trimming solder blobs. Wire up a harness, place the rear over the grip, and screw and tighten. See the next image for how the battery lead can be routed.
 #+attr_html: :width 400px
 [[./documentation_images/physical_build/used_images/rear_closing.jpg]]
 
