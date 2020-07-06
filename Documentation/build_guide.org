@@ -1,4 +1,7 @@
 
+* Download the STL files from the releases of this REPO
+https://github.com/MatthewBregg/S-Core-DC-Drive-Rival-Mag-Grip-SMG/releases/tag/1.0
+
 * Pretty images of the blaster
 [[./documentation_images/rotated.JPG]]
 [[./documentation_images/DSC06011.JPG]]
