@@ -73,8 +73,7 @@ Outgoing from the ESC, have gnd, throttle, flyshot rpm count connect to a 3 pin 
 
 For AFRO n_fet escs, you can find a bit of information [[http://torukmakto4.blogspot.com/2020/02/closed-loop-adjustable-speed-drive-for.html][here]].
 
-But those are gone now, and I have no experience yet with spider ESCs, or /u/torukmakto4s custom ESCs (which I plan to try soon). 
-So writing a guide is difficult.  
+The current main supply of premade ESCs are ZTW Spiders, I wrote a guide for using those [[http://torukmakto4.blogspot.com/2021/01/flashing-ztw-spiders-for-flyshot.html][here]]. The ZTW Spider 30A is slightly smaller than the 20A afro, and should work fine. 
 
 *** PCB
 [[https://easyeda.com/mbregg/nerf-brushed-pusher-brushless-flywheel-board][The PCB schematic can be viewed at easyeda, follow this link. ]]
