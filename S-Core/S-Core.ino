@@ -633,7 +633,7 @@ void loop(){
         lastTriggerUp = millis(); //Not ACTUALLY trigger up any more due to the disconnector trap. A burst disconnect is a pseudo trigger up.
         //Main disconnector trap - This is where we land if firing ends and trigger is still down.
 	// This can happen if we encounter a `timeout` in the above firing code.
-	while(readTrigger()) { delay(2); }
+	while(readTrigger() && timed_out) { delay(2); }
       }
     }
   } else {
