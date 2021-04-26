@@ -14,7 +14,6 @@
  // PD3 - D3 - INT1 - Tach input channel 1 (M2F).
  // PD4 - D4 - Bolt limit switch input. Pullup.
  // PB4 - D12 - Bolt limit switch input. Pullup.
- // Flywheel Drive
  // PB2 - D10 - OCR1B - Throttle channel 0 (M1, M1F) associated with INT0 (PD2)
  // PB1 - D9 - OCR1A - Throttle channel 1 (M2, M2F) associated with INT1 (PD3)
  
@@ -97,7 +96,7 @@ unsigned long selftestTimeStartedTaching;         //=millis() when tach counting
 unsigned long speedtrap_buf0;                     //Add every successive read to this and /2 (LSR) it. Rolling-average low pass filter thingy. May be later implemented for fire control (not floor test)
 unsigned long speedtrap_buf1;                     //Ditto for drive 1 (Done simultaneously)
 unsigned long speedtrap_offsetMargin      = 20;   //Increment goodTachCount in speedtrap when both buffers within this distance of the setpoint
-unsigned long speedtrap_overspeedTripMargin = 50; //Unfiltered "critical overspeed" detector uses this. Fails on any single pulse shorter than this after a delay to account for any initial desyncs
+unsigned long speedtrap_overspeedTripMargin = 65; //Unfiltered "critical overspeed" detector uses this. Fails on any single pulse shorter than this after a delay to account for any initial desyncs
 
 // DRV8801 Pinout
 const int DIR = A5;
