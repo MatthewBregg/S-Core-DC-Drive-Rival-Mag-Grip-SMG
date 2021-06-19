@@ -607,7 +607,7 @@ No nut or insert here to screw into, just plastic. But it's also just the trigge
 ** Nub Catch
 This pushes back the ball retention nub to release the balls from the magazine. 
 V1.1 uses an M3 screw instead of all plastic.
-This is the M3 screw with 30mm of smooth section followed by a few mm of threads (I had 10 mm of threads, so M3x40 effectively, with 30mm smooth.
+This is the M3 screw with 30mm of smooth section followed by a few mm of threads (I had 10 mm of threads, so M3x40 effectively, with 30mm smooth).
 I used a cut down 55mm M3 for this.
 Threaded shaft works, but while the smooth screw is super smooth, threads caused some bumpiness, so I advise finding a threaded screw.
 
