@@ -874,7 +874,7 @@ I tried to document every step along this build, and place it all into this guid
 
 * Battery insertation
 
-[[./documentation_images/physical_build/used_images/battery_inserted.png]]
+[[./documentation_images/physical_build/used_images/battery_inserted.jpg]]
 
 This is designed for a 1000 mah 4s "graphene" pack.
 
