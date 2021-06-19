@@ -7,6 +7,12 @@ https://github.com/MatthewBregg/S-Core-DC-Drive-Rival-Mag-Grip-SMG/releases/tag/
 [[./documentation_images/DSC06011.JPG]]
 [[./documentation_images/DSC06013.JPG]]
 
+* V1.1 Changes
+- Sacrificial layers for square nuts gone for blaster_grip, can ignore directions saying to drill those.
+- New nub catch design.
+- Mag release handles worker 15 dart mags.
+- Mag release has arrow to indicate direction (up towards blaster top). 
+
 * Intro
 ** Overview
 You will need...
@@ -16,7 +22,8 @@ You will need...
   [[./documentation_images/pusher_motor.jpg]]
 - A 2.5mm ball driver for M3 screws 
 - M3 screws, hex socket cap. < 3mm head height, < 6mm head diameter.
-  - M3x30mm, 8xM3x45, 2xM3x20, 2xM3x16, M3x8, 9xM3x12, 6xM3x6
+  - M3x30mm, 8xM3x45, 2xM3x20, 2xM3x16, M3x8, 9xM3x12, 6xM3x6. 
+  - a M3 screw with 30mm of smooth shaft followed with at least a few mm of threads. I cut down a 55mm M3 screw with a smooth section for this. This is for the nub catch (v1.1 change). 
 - M3 hex nuts, M3 nyloc hex nut, M3 square nuts.
   - Both of the hex nuts are standard M3 hex nuts. Thickness isn't too important, although mine are 2.2 mm thick. The square nuts are the thin kind, the same ones PRUSA sends with their printers (huh, I wonder why I happened to choose those, almost like I had them lying around already...). McMaster is one of the few places I've found that sells good quality ones for a reasonable price/shipping. Other places I've found are from a slow boat to China during COVID, extremely expensive, not stainless, or require a bulk order of hundreds. https://www.mcmaster.com/square-nuts/stainless-steel-square-nuts/. Remember to get the thin ones, 5.5x1.8mm.
 
@@ -597,6 +604,20 @@ Slide the trigger into the grove in the grip.
 
 No nut or insert here to screw into, just plastic. But it's also just the trigger, and this screw isn't going anywhere.  The first half should be easy, as you drilled it out. The second half will secure the screw, and be a bit of a PITA to screw into.
 
+** Nub Catch
+This pushes back the ball retention nub to release the balls from the magazine. 
+V1.1 uses an M3 screw instead of all plastic.
+This is the M3 screw with 30mm of smooth section followed by a few mm of threads.
+I used a cut down 55mm M3 for this.
+Threaded shaft works, but while the smooth screw is super smooth, threads caused some bumpiness, so I advise finding a threaded screw.
+
+Anyway, just screw the screw all the way into the hole shown. 
+[[./documentation_images/physical_build/used_images/new_catch_side_annotated.jpg]]
+[[./documentation_images/physical_build/used_images/new_catch.jpg]]
+
+This will avoid the below happening.
+[[./documentation_images/physical_build/used_images/old_broken_catch.jpg]]
+
 ** Flywheel mounting onto motor
 Notice the pattern on the flywheel.
 #+attr_html: :width 400px
@@ -659,7 +680,7 @@ You will need a beefy <8mm spring.
   #+attr_html: :width 400px
   [[./documentation_images/physical_build/used_images/mag_catch_spring.png]]
 - Place the  catch into the magazine body.
-  - Catch orientation is very important here! The top of the catch is rounded, the bottom is square. Look for the square edge, and ensure they will point down towards the bottom of the magazine!
+  - Catch orientation is very important here! There is an arrow on the catch, on the side facing the magazine. This arrow should be facing up, towards the blaster top. Note that the images shown here are of an older catch without the arrow.
   #+attr_html: :width 400px
   [[./documentation_images/physical_build/used_images/mag_catch_orientation.png]]
 - Use a finger to hold the catch in place against spring tension, and push the magazine body into position in the magazine.
@@ -850,3 +871,18 @@ If you're doing a build, awesome! I'd love to hear it, as it means my work in wr
 If you get stuck, feel free to message me on reddit, [[https://www.reddit.com/u/matthewbregg][/u/matthewbregg]], I'm happy to help, and I'll probably update the guide.
 
 I tried to document every step along this build, and place it all into this guide, but it's easy to miss things, or do something without even realizing I'm doing it. 
+
+* Battery insertation
+
+[[./documentation_images/physical_build/used_images/battery_inserted.png]]
+
+This is designed for a 1000 mah 4s "graphene" pack.
+
+Some other packs will work, there's an 850 mah 4s nanotech that is also suitable.
+
+To insert the battery, I place the balance plug to the side, under the side railing that the top rail/battery cover rests on.
+This can be tricky, as the battery + balance plug is too thick to drop in, so must be angled in, or first place the battery in then snake the balance plug.
+
+Regardless, one this is done, the XT60 can rest against the FWC covers as shown, with all the wires pushes to one side allowing the XT60 to sit directly on plastic, which gives the battery cover enough room to close.
+
+The 850 mah battery is quite a bit easier to insert 😉.
