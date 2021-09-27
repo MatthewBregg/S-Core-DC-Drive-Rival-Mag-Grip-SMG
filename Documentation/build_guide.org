@@ -596,7 +596,7 @@ Done, the limit switch is installed!
 
 
 ** Trigger Installation
-Slide the trigger into the grove in the grip.
+Slide the trigger into the groove in the grip.
 
  Get a M3x30mm, and screw it in. Be careful when tightening down here, if the screw isn't aligned you don't want to drive the screw into the bearing.
 #+attr_html: :width 400px
@@ -609,7 +609,7 @@ This pushes back the ball retention nub to release the balls from the magazine.
 V1.1 uses an M3 screw instead of all plastic.
 This is the M3 screw with 30mm of smooth section followed by a few mm of threads (I had 10 mm of threads, so M3x40 effectively, with 30mm smooth).
 I used a cut down 55mm M3 for this.
-Threaded shaft works, but while the smooth screw is super smooth, threads caused some bumpiness, so I advise finding a threaded screw.
+Threaded shaft works, but while the smooth screw is super smooth, threads caused some bumpiness, so I advise finding a screw with a smooth, unthreaded section.
 
 Anyway, just screw the screw all the way into the hole shown. 
 [[./documentation_images/physical_build/used_images/new_catch_side_annotated.jpg]]
